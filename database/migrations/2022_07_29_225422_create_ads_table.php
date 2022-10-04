@@ -22,19 +22,19 @@ return new class extends Migration
         });
 
         DB::table('ads')->insert([
-            'body' => 'JÓVENES AYUDANTES PARA TALLER DE MELAMINA Y (1) JOVEN SOLDADOR PARA TUBO DELGADO (SALIDA...',
+            'body' => 'Jóvenes ayudantes para taller de melamina y (1) joven soldador para tubo delgado (salida...',
         ]);
 
         DB::table('ads')->insert([
-            'body' => '(1) TERRENO 1800M2 EN CARACOTO (ENACE) PAPELES EN REGISTROS PÚBLICOS Y DOCUMENTOS AL DÍA ...',
+            'body' => '(1) Terreno 1800m2 en caracoto (enace) papeles en registros públicos y documentos al día ...',
         ]);
 
         DB::table('ads')->insert([
-            'body' => 'HABITACIONES CON O SIN BAÑO PARA PAREJAS SOLAS JR. MIRAFLORES (ALTURA DEL TERMINAL) ...',
+            'body' => 'Habitaciones con o sin baño para parejas solas jr. Miraflores (altura del terminal) ...',
         ]);
 
         DB::table('ads')->insert([
-            'body' => '01 SEÑORA O SEÑORITA PARA VENTAS EN BODEGUITA, (POR EL MDO. PEDRO VILCAPAZA)',
+            'body' => '01 Señora o señorita para ventas en bodeguita, (por el mdo. Pedro vilcapaza)',
         ]);
 
         DB::table('ads')->insert([

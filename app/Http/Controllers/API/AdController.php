@@ -16,7 +16,7 @@ class AdController extends Controller
         $ads = AdCategory::select('*')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            // ->orderByDesc('documents.created_at')
+            ->orderByDesc('ads.id')
             ->get();
         
         return response()->json([
