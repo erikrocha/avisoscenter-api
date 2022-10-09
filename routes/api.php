@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AdController;
+use App\Http\Controllers\API\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +19,15 @@ use App\Http\Controllers\API\AdController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-#ads
+
+# ads
 Route::get('ads', [AdController::class, 'index']);
 
-#adPhones
+# adPhones
 Route::get('adPhones', [AdController::class, 'adPhones']);
 Route::get('searchAdCategories', [AdController::class, 'searchAdCategories']);
 Route::get('searchAdPhones', [AdController::class, 'searchAdPhones']);
+
+# users
+Route::get('users', [UserController::class, 'index']);
+Route::post('users', [UserController::class, 'store']);

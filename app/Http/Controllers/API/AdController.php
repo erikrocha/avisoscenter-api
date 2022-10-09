@@ -13,7 +13,7 @@ class AdController extends Controller
 {
     public function index()
     {
-        $ads = AdCategory::select('*')
+        $ads = AdCategory::select('*', 'ads.created_at as ads_created_at')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->orderByDesc('ads.id')
