@@ -25,6 +25,11 @@ return new class extends Migration
             $table->char('status', 1);
             $table->timestamps();
         });
+
+        DB::table('users')->insert([
+            'token_device' => 'fF95p0SAajY:APA91bFLOiRTZUkl7nXcbtF7Z53nH0xGxmEoAZRgb7MDvmLbr6xVIHCgE3YNk9lBT8Ex910ecLlGY_uBRzV9NgcLSBH3W5LpRULueZI2rqVxPaztNXA4lZau030erFqFgjHt_5Mv5wGS',
+            'status' => 1
+        ]);
     }
 
     /**

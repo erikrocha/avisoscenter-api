@@ -22,22 +22,26 @@ return new class extends Migration
         });
 
         DB::table('ads')->insert([
-            'body' => 'Jóvenes ayudantes para taller de melamina y (1) joven soldador para tubo delgado (salida...',
+            'body' => 'Jóvenes ayudantes para taller de melamina y (1) joven soldador para tubo delgado (salida a puno - satelite iglesia torree chayoc)',
+            'latitude' => '-15.475339',
+            'longitude' => '-70.125443',
             'created_at' => now()
         ]);
 
         DB::table('ads')->insert([
-            'body' => '(1) Terreno 1800m2 en caracoto (enace) papeles en registros públicos y documentos al día ...',
+            'body' => '(1) Terreno 1800m2 en caracoto (enace) papeles en registros públicos y documentos al día. Trato directo con los dueños y facilidades',
             'created_at' => now()
         ]);
 
         DB::table('ads')->insert([
-            'body' => 'Habitaciones con o sin baño para parejas solas jr. Miraflores (altura del terminal) ...',
+            'body' => 'Habitaciones con o sin baño privado para estudiantes o parejas solas sin hijos o mascotas jr. Miraflores (altura del terminal)',
+            'latitude' => '-15.5015139',
+            'longitude' => '-70.1278192',
             'created_at' => now()
         ]);
 
         DB::table('ads')->insert([
-            'body' => '01 Señora o señorita para ventas en bodeguita, (por el mdo. Pedro vilcapaza)',
+            'body' => '01 Señora o señorita para ventas en bodeguita, (por el mdo. Pedro vilcapaza) buen trato, buena paga incluye desayuno, almuerzo y cena',
             'created_at' => now()
         ]);
 
