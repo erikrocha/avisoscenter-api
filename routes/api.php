@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AdController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 # ads
 Route::get('ads', [AdController::class, 'index']);
+Route::get('searchMapFromAd', [AdController::class, 'searchMapFromAd']);
 
 # adPhones
 Route::get('adPhones', [AdController::class, 'adPhones']);
@@ -31,3 +33,6 @@ Route::get('searchAdPhones', [AdController::class, 'searchAdPhones']);
 # users
 Route::get('users', [UserController::class, 'index']);
 Route::post('users', [UserController::class, 'store']);
+
+# images
+Route::get('images', [ImageController::class, 'searchImagesFromAd']);

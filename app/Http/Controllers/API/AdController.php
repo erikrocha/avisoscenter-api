@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Models\Ad;
+use App\Models\Ad;
 use App\Models\AdCategory;
 use App\Models\AdPhone;
 
@@ -71,4 +71,16 @@ class AdController extends Controller
         ]);
     }
     
+    public function searchMapFromAd(Request $request)
+    {
+        $map = Ad::select('*')
+            ->where('id', '=', $request->input('ad_id'))
+            ->whereNotNull('latitude')
+            ->get();
+        
+        return response()->json([
+            'count' => count($map),
+            'items' => $map,
+        ]);
+    }
 }
