@@ -98,4 +98,19 @@ class AdController extends Controller
             'items' => $rents
         ]);
     }
+
+    public function getRentsWithLocation(Request $request)
+    {
+        $rentsWithLocation = AdCategory::select('*')
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->whereNotNull('latitude')
+            ->where('category_id', '=', $request->input('category_id'))
+            ->get();
+        
+        return response()->json([
+            'count' => count($rentsWithLocation),
+            'items' => $rentsWithLocation
+        ]);
+    }
 }

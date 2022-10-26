@@ -62,11 +62,15 @@ return new class extends Migration
 
         DB::table('ads')->insert([
             'body' => 'HABITACIONES CON O SIN BAÑO, PARA PAREJAS SOLAS JR. MIRAFLORES (ALTURA DEL TERMINAL).',
+            'latitude' => '-15.4862739',
+            'longitude' => '-70.1301561',
             'created_at' => now()
         ]);
 
         DB::table('ads')->insert([
             'body' => 'HABITACIONES PARA SEÑORITAS CON SERVICIOS BÁSICOS EN EL CENTRO DE LA CIUDAD, JR. TUMBES #1044.',
+            'latitude' => '-15.485531',
+            'longitude' => '-70.137020',
             'created_at' => now()
         ]);
 
