@@ -171,7 +171,7 @@ return new class extends Migration
             'address' => 'JR. 8 DE NOVIEMBRE 858',
             'latitude' => '-15.487934',
             'longitude' => '-70.133270',
-            'condition' => 'ai',
+            'condition' => 'ia',
             'type' => 'local',
             'status' => 1,
             'created_at' => now()
