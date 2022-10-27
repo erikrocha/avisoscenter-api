@@ -101,7 +101,7 @@ class AdController extends Controller
 
     public function getRentsWithLocation(Request $request)
     {
-        $rentsWithLocation = AdCategory::select('*')
+        $rentsWithLocation = AdCategory::select('*', 'ads.created_at as date')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->whereNotNull('latitude')

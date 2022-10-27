@@ -71,6 +71,36 @@ return new class extends Migration
             'ad_id' => 10,
             'category_id' => 3
         ]);
+
+        // 11
+        DB::table('ad_categories')->insert([
+            'ad_id' => 11,
+            'category_id' => 2
+        ]);
+
+        // 12
+        DB::table('ad_categories')->insert([
+            'ad_id' => 12,
+            'category_id' => 2
+        ]);
+
+        // 13
+        DB::table('ad_categories')->insert([
+            'ad_id' => 13,
+            'category_id' => 2
+        ]);
+
+        // 14
+        DB::table('ad_categories')->insert([
+            'ad_id' => 14,
+            'category_id' => 2
+        ]);
+
+        // 15
+        DB::table('ad_categories')->insert([
+            'ad_id' => 15,
+            'category_id' => 2
+        ]);
     }
 
     /**
