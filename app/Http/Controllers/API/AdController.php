@@ -113,4 +113,18 @@ class AdController extends Controller
             'items' => $rentsWithLocation
         ]);
     }
+
+    public function getAdsFromCategory(Request $request)
+    {
+        $needs = AdCategory::select('*', 'ads.created_at as date')
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->where('category_id', '=', $request->input('category_id'))
+            ->get();
+
+            return response()->json([
+                'count' => count($needs),
+                'items' => $needs
+            ]);
+    }
 }
