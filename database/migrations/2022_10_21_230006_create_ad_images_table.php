@@ -41,6 +41,16 @@ return new class extends Migration
             'ad_id' => 9,
             'image_id' => 7
         ]);
+
+        DB::table('ad_images')->insert([
+            'ad_id' => 19,
+            'image_id' => 3
+        ]);
+
+        DB::table('ad_images')->insert([
+            'ad_id' => 16,
+            'image_id' => 7
+        ]);
     }
 
     /**

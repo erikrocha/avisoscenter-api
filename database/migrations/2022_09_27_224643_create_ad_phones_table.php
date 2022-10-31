@@ -71,6 +71,66 @@ return new class extends Migration
             'ad_id' => 10,
             'phone_id' => 10
         ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 11,
+            'phone_id' => 11
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 12,
+            'phone_id' => 12
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 13,
+            'phone_id' => 13
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 14,
+            'phone_id' => 14
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 15,
+            'phone_id' => 15
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 16,
+            'phone_id' => 16
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 17,
+            'phone_id' => 17
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 18,
+            'phone_id' => 18
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 19,
+            'phone_id' => 19
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 20,
+            'phone_id' => 20
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 21,
+            'phone_id' => 21
+        ]);
+
+        DB::table('ad_phones')->insert([
+            'ad_id' => 22,
+            'phone_id' => 22
+        ]);
     }
 
     /**

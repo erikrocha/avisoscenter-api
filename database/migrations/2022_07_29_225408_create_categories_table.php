@@ -30,6 +30,22 @@ return new class extends Migration
         DB::table('categories')->insert([
             'name' => 'VENDO',
         ]);
+
+        DB::table('categories')->insert([
+            'name' => 'TRASPASO',
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'ANTICRESIS',
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'SERVICIOS',
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'OTROS',
+        ]);
     }
 
     /**

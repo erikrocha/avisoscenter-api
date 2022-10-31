@@ -18,8 +18,8 @@ return new class extends Migration
             $table->text('body');
             $table->string('address', 64)->nullable();
             $table->decimal('price', 8,2)->nullable();
-            $table->string('latitude', 16)->nullable();
-            $table->string('longitude', 16)->nullable();
+            $table->string('latitude', 32)->nullable();
+            $table->string('longitude', 32)->nullable();
             $table->char('condition', 8)->default('ia');
             $table->char('type', 16)->nullable();
             $table->char('bath', 1)->nullable();
@@ -185,6 +185,78 @@ return new class extends Migration
             'longitude' => '-70.133162',
             'condition' => 'paid',
             'type' => 'other',
+            'status' => 1,
+            'created_at' => now()
+        ]);
+
+        // 16 - traspaso
+        // with imagen id: 7
+        DB::table('ads')->insert([
+            'body' => 'TRASPASO POR MOTIVOS DE SALUD (1) BOTICA CON TODOS LOS IMPLEMENTOS Y LISTO PARA TRABAJAR. JR. 8 DE NOVIEMBRE #1234',
+            'address' => 'JR. 8 DE NOVIEMBRE #1234',
+            'latitude' => '-15.488958396974793',
+            'longitude' => '-70.13272241119374',
+            'condition' => 'free',
+            'status' => 1,
+            'created_at' => now()
+        ]);
+
+        // 17 - traspaso
+        DB::table('ads')->insert([
+            'body' => 'TRASPASO UN INTERNET CON 10 MAQUINAS i5 LISTO PARA TRABJAR, INCLUYO LOCAL, INTERNET. JR. RAMON CASTILLA #2222',
+            'address' => 'JR. RAMON CASTILLA #2222',
+            'latitude' => '-15.487867610020023',
+            'longitude' => '-70.13001874451633',
+            'condition' => 'paid',
+            'status' => 1,
+            'created_at' => now()
+        ]);
+
+        // 18 - anticresis
+        DB::table('ads')->insert([
+            'body' => '(1) CASA DE DOS PISOS CON TODOS LOS SERVICIOS COMPLETOS, UBICADO AL FRENTE DEL CEMENTERIO CENTRAL PASAJE. APOLINAR ALLASI # 3333',
+            'address' => 'PASAJE. APOLINAR ALLASI # 3333',
+            'latitude' => '-15.497164761690517',
+            'longitude' => '-70.14142492857773',
+            'condition' => 'ia',
+            'status' => 1,
+            'created_at' => now()
+        ]);
+
+        // 19 - anticresis
+        // with imagen id: 3
+        DB::table('ads')->insert([
+            'body' => '(1) TERRENO IDEAL PARA TALLER O ALMACEN, SALIDA A HUATA AV. MODESTO BORDA #4444',
+            'address' => 'AV. MODESTO BORDA # 4444',
+            'latitude' => '-15.511082420461117',
+            'longitude' => '-70.10184992456288',
+            'condition' => 'free',
+            'status' => 1,
+            'created_at' => now()
+        ]);
+
+        // 20 - servicios
+        DB::table('ads')->insert([
+            'body' => 'MANTENIMIENTO DE LAPTOPS Y PCS A DOMICILIO, SEGURO Y CONFIABLE',
+            'condition' => 'free',
+            'status' => 1,
+            'created_at' => now()
+        ]);
+
+        // 21 - servicios
+        DB::table('ads')->insert([
+            'body' => 'MANTENIMIENTO E INSTALACION DE CONEXIONES ELECTRICAS A DOMICILIO',
+            'latitude' => '-15.471143522077677',
+            'longitude' => '-70.11163530088025',
+            'condition' => 'paid',
+            'status' => 1,
+            'created_at' => now()
+        ]);
+
+        // 22 - otros
+        DB::table('ads')->insert([
+            'body' => 'OTROS 1',
+            'condition' => 'free',
             'status' => 1,
             'created_at' => now()
         ]);

@@ -101,6 +101,48 @@ return new class extends Migration
             'ad_id' => 15,
             'category_id' => 2
         ]);
+
+        // 16
+        DB::table('ad_categories')->insert([
+            'ad_id' => 16,
+            'category_id' => 4
+        ]);
+
+        // 17
+        DB::table('ad_categories')->insert([
+            'ad_id' => 17,
+            'category_id' => 4
+        ]);
+
+        // 18
+        DB::table('ad_categories')->insert([
+            'ad_id' => 18,
+            'category_id' => 5
+        ]);
+
+        // 19
+        DB::table('ad_categories')->insert([
+            'ad_id' => 19,
+            'category_id' => 5
+        ]);
+
+        // 20
+        DB::table('ad_categories')->insert([
+            'ad_id' => 20,
+            'category_id' => 6
+        ]);
+
+        // 21
+        DB::table('ad_categories')->insert([
+            'ad_id' => 21,
+            'category_id' => 6
+        ]);
+
+        // 22
+        DB::table('ad_categories')->insert([
+            'ad_id' => 22,
+            'category_id' => 7
+        ]);
     }
 
     /**
