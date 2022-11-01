@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class AdCategory extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'ad_id',
+        'category_id'
+    ];
 }

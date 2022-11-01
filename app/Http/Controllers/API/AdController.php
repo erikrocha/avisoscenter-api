@@ -5,8 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ad;
+use App\Models\Phone;
+use App\Models\Image;
 use App\Models\AdCategory;
 use App\Models\AdPhone;
+use App\Models\AdImage;
+use DB;
 
 
 class AdController extends Controller
@@ -120,11 +124,106 @@ class AdController extends Controller
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->where('category_id', '=', $request->input('category_id'))
+            ->orderBy('ads.created_at')
+            ->orderByDesc('ads.condition')
             ->get();
 
             return response()->json([
                 'count' => count($needs),
                 'items' => $needs
             ]);
+    }
+
+    // ----------------------------------------------------------------------------------------------------
+    // postAd
+    // ----------------------------------------------------------------------------------------------------
+    public function postAd(Request $request)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            // ads
+            $ad = Ad::create([
+                'body' => $request['body'],
+                'address' => $request['address'],
+                'price' => $request['price'],
+                'latitude' => $request['latitude'],
+                'longitude' => $request['longitude'],
+                'condition' => $request['condition'],
+                'type' => $request['type'],
+                'bath' => $request['bath'],
+                'pets' => $request['pets'],
+                'wifi' => $request['wifi'],
+                'cable' => $request['cable'],
+                'parking_moto' => $request['parking_moto'],
+                'parking_car' => $request['parking_car'],
+                'thermal' => $request['thermal'],
+                'laundry' => $request['laundry'],
+                'silent' => $request['silent'],
+                'status' => $request['status']
+            ]);
+    
+            AdCategory::create([
+                'ad_id' => $ad->id,
+                'category_id' => $request['category_id']
+            ]);
+    
+            // phones
+            $phone = Phone::select('*')
+                ->where('number', '=', $request->input('phone'))
+                ->get();
+            
+            if (count($phone) == 0){
+                $p = Phone::create([
+                    'number' => $request->input('phone')
+                ]);            
+    
+                AdPhone::create([
+                    'ad_id' => $ad->id,
+                    'phone_id' => $p->id
+                ]);
+            } else {
+                $phone_id = Phone::where('number', $request->input('phone'))->first()->id;
+                AdPhone::create([
+                    'ad_id' => $ad->id,
+                    'phone_id' => $phone_id
+                ]);
+            }
+
+            // images
+            $images = $request->input('images');
+            foreach ($images as $item){
+                $image = Image::select('*')
+                    ->where('url', '=', $item['url'])
+                    ->get();
+
+                if(count($image) == 0)
+                {
+                    $img = Image::create([
+                        'url' => $item['url']
+                    ]);
+
+                    AdImage::create([
+                        'ad_id' => $ad->id,
+                        'image_id' => $img->id
+                    ]);
+                } else {
+                    $image_id = Image::where('url', $item['url'])->first()->id;
+                    AdImage::create([
+                        'ad_id' => $ad->id,
+                        'image_id' => $image_id
+                    ]);
+                }
+            }
+            DB::commit();
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+        }
+
+        // return $ad->id;
+        // return $request->all();
     }
 }

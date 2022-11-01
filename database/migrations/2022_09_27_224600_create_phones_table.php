@@ -15,96 +15,97 @@ return new class extends Migration
     {
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->string('number', 16);
+            // $table->string('number', 16);
+            $table->integer('number');
             $table->timestamps();
         });
 
         DB::table('phones')->insert([
-            'number' => '111 111111',
+            'number' => 111111111
         ]);
 
         DB::table('phones')->insert([
-            'number' => '222 222222',
+            'number' => 222222222
         ]);
 
         DB::table('phones')->insert([
-            'number' => '333 333333',
+            'number' => 333333333
         ]);
 
         DB::table('phones')->insert([
-            'number' => '444444444',
+            'number' => 444444444
         ]);
 
         DB::table('phones')->insert([
-            'number' => '555555555',
+            'number' => 555555555
         ]);
 
         DB::table('phones')->insert([
-            'number' => '666666666',
+            'number' => 666666666
         ]);
 
         DB::table('phones')->insert([
-            'number' => '777777777',
+            'number' => 777777777
         ]);
 
         DB::table('phones')->insert([
-            'number' => '888888888',
+            'number' => 888888888
         ]);
 
         DB::table('phones')->insert([
-            'number' => '999999999',
+            'number' => 999999999
         ]);
 
         DB::table('phones')->insert([
-            'number' => '010000010',
+            'number' => 100101010
         ]);
 
         DB::table('phones')->insert([
-            'number' => '011000000',
+            'number' => 111000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '012000000',
+            'number' => 112000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '013000000',
+            'number' => 113000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '014000000',
+            'number' => 114000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '015000000',
+            'number' => 115000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '016000000',
+            'number' => 116000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '017 000000',
+            'number' => 117000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '018 000000',
+            'number' => 118000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '019 000000',
+            'number' => 119000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '020 000000',
+            'number' => 220000000
         ]);
 
         DB::table('phones')->insert([
-            'number' => '021 000000',
+            'number' => 221000021
         ]);
 
         DB::table('phones')->insert([
-            'number' => '022 000000',
+            'number' => 222000022
         ]);
     }
 

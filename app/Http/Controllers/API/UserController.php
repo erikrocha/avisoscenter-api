@@ -35,6 +35,5 @@ class UserController extends Controller
                 'msg' => 'Este dispositivo ya ha sido registrado'
             ]);
         }
-        
     }
 }

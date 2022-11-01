@@ -22,14 +22,16 @@ return new class extends Migration
             $table->string('longitude', 32)->nullable();
             $table->char('condition', 8)->default('ia');
             $table->char('type', 16)->nullable();
-            $table->char('bath', 1)->nullable();
-            $table->char('pets', 1)->nullable();
-            $table->char('wifi', 1)->nullable();
-            $table->char('cable', 1)->nullable();
-            $table->char('parking_moto', 1)->nullable();
-            $table->char('parking_car', 1)->nullable();
-            $table->char('thermal', 1)->nullable();
-            $table->char('status', 1)->default('1');
+            $table->boolean('bath')->nullable();
+            $table->boolean('pets')->nullable();
+            $table->boolean('wifi')->nullable();
+            $table->boolean('cable')->nullable();
+            $table->boolean('parking_moto')->nullable();
+            $table->boolean('parking_car')->nullable();
+            $table->boolean('thermal')->nullable();
+            $table->boolean('laundry')->nullable();
+            $table->boolean('silent')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
 
@@ -53,10 +55,10 @@ return new class extends Migration
             'longitude' => '-70.1278192',
             'condition' => 'free',
             'type' => 'roombath',
-            'bath' => '1',
-            'pets' => '1',
-            'wifi' => '1',
-            'parking_moto' => '1',
+            'bath' => 1,
+            'pets' => 1,
+            'wifi' => 1,
+            'parking_moto' => 1,
             'status' => 1,
             'created_at' => now()
         ]);
