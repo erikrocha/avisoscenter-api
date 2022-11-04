@@ -20,8 +20,9 @@ return new class extends Migration
             $table->decimal('price', 8,2)->nullable();
             $table->string('latitude', 32)->nullable();
             $table->string('longitude', 32)->nullable();
-            $table->char('condition', 8)->default('ia');
+            $table->char('condition', 8)->nullable();
             $table->char('type', 16)->nullable();
+            $table->boolean('isIA')->default(0);
             $table->boolean('bath')->nullable();
             $table->boolean('pets')->nullable();
             $table->boolean('wifi')->nullable();
@@ -39,12 +40,14 @@ return new class extends Migration
             'body' => 'Jóvenes ayudantes para taller de melamina y (1) joven soldador para tubo delgado (salida a puno - satelite iglesia torree chayoc)',
             'latitude' => '-15.475339',
             'longitude' => '-70.125443',
-            'created_at' => now()
+            'condition' => 'free',
+            'created_at' => '2022-11-01'
         ]);
 
         DB::table('ads')->insert([
             'body' => '(1) Terreno 1800m2 en caracoto (enace) papeles en registros públicos y documentos al día. Trato directo con los dueños y facilidades',
-            'created_at' => now()
+            'condition' => 'free',
+            'created_at' => '2022-11-01'
         ]);
 
         DB::table('ads')->insert([
@@ -60,27 +63,33 @@ return new class extends Migration
             'wifi' => 1,
             'parking_moto' => 1,
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-01'
         ]);
 
         DB::table('ads')->insert([
             'body' => '01 Señora o señorita para ventas en bodeguita, (por el mdo. Pedro vilcapaza) buen trato, buena paga incluye desayuno, almuerzo y cena',
-            'created_at' => now()
+            'condition' => 'free',
+            'created_at' => '2022-11-01'
         ]);
 
         DB::table('ads')->insert([
             'body' => '[EN REMATE] 01 MAQUINA DE JUEGOS SIMULADOS DANCING “ALDAMIRO 2015”, 01 MAQUINA DE BASKETBALL.',
-            'created_at' => now()
+            'condition' => 'free',
+            'isIA' => 1,
+            'created_at' => '2022-11-01'
         ]);
 
         DB::table('ads')->insert([
             'body' => '01 COCINERA SEÑORA O SEÑORITA CON EXPERIENCIA PARA UNA FAMILIA DE 12 PERSONAS.',
-            'created_at' => now()
+            'condition' => 'free',
+            'created_at' => '2022-11-02'
         ]);
 
         DB::table('ads')->insert([
             'body' => '02 SEÑORITAS CON EXPERIENCIA EN VENTAS Y BUENA PRESENCIA. “AVICOLA ANDREE”. ',
-            'created_at' => now()
+            'condition' => 'free',
+            'isIA' => 1,
+            'created_at' => '2022-11-02'
         ]);
 
         DB::table('ads')->insert([
@@ -93,7 +102,7 @@ return new class extends Migration
             'bath' => '1',
             'wifi' => '1',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-02'
         ]);
 
         DB::table('ads')->insert([
@@ -105,12 +114,13 @@ return new class extends Migration
             'condition' => 'paid',
             'type' => 'room',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-02'
         ]);
 
         DB::table('ads')->insert([
             'body' => 'JEBES PARA MINERIA DE SEGUNDO USO PARA CONSTRUCCION DE CHUTE ',
-            'created_at' => now()
+            'condition' => 'free',
+            'created_at' => '2022-11-02'
         ]);
 
         // 11 - casa
@@ -126,7 +136,7 @@ return new class extends Migration
             'parking_moto' => '1',
             'parking_car' => '1',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-03'
         ]);
 
         // 12 - departamento
@@ -146,7 +156,7 @@ return new class extends Migration
             'parking_car' => '1',
             'thermal' => '1',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-03'
         ]);
 
         // 13 - minidepartamento
@@ -156,7 +166,8 @@ return new class extends Migration
             'price' => 600,
             'latitude' => '-15.4849764',
             'longitude' => '-70.1387445',
-            'condition' => 'ia',
+            'condition' => 'free',
+            'isIA' => 1,
             'type' => 'minidepartament',
             'bath' => '1',
             'pets' => '1',
@@ -164,7 +175,7 @@ return new class extends Migration
             'parking_moto' => '1',
             'thermal' => '1',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-03'
         ]);
 
         // 14 - local
@@ -173,10 +184,11 @@ return new class extends Migration
             'address' => 'JR. 8 DE NOVIEMBRE 858',
             'latitude' => '-15.487934',
             'longitude' => '-70.133270',
-            'condition' => 'ia',
+            'condition' => 'free',
+            'isIA' => 1,
             'type' => 'local',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-03'
         ]);
 
         // 15 - terreno
@@ -188,7 +200,7 @@ return new class extends Migration
             'condition' => 'paid',
             'type' => 'other',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-03'
         ]);
 
         // 16 - traspaso
@@ -200,7 +212,7 @@ return new class extends Migration
             'longitude' => '-70.13272241119374',
             'condition' => 'free',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-04'
         ]);
 
         // 17 - traspaso
@@ -211,7 +223,7 @@ return new class extends Migration
             'longitude' => '-70.13001874451633',
             'condition' => 'paid',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-04'
         ]);
 
         // 18 - anticresis
@@ -220,9 +232,10 @@ return new class extends Migration
             'address' => 'PASAJE. APOLINAR ALLASI # 3333',
             'latitude' => '-15.497164761690517',
             'longitude' => '-70.14142492857773',
-            'condition' => 'ia',
+            'condition' => 'free',
+            'isIA' => 1,
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-04'
         ]);
 
         // 19 - anticresis
@@ -234,7 +247,7 @@ return new class extends Migration
             'longitude' => '-70.10184992456288',
             'condition' => 'free',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-04'
         ]);
 
         // 20 - servicios
@@ -242,7 +255,7 @@ return new class extends Migration
             'body' => 'MANTENIMIENTO DE LAPTOPS Y PCS A DOMICILIO, SEGURO Y CONFIABLE',
             'condition' => 'free',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-04'
         ]);
 
         // 21 - servicios
@@ -252,7 +265,7 @@ return new class extends Migration
             'longitude' => '-70.11163530088025',
             'condition' => 'paid',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-04'
         ]);
 
         // 22 - otros
@@ -260,7 +273,7 @@ return new class extends Migration
             'body' => 'OTROS 1',
             'condition' => 'free',
             'status' => 1,
-            'created_at' => now()
+            'created_at' => '2022-11-04'
         ]);
     }
 
