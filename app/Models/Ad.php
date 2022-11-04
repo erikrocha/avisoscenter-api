@@ -9,6 +9,8 @@ class Ad extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'body',
         'address',
@@ -26,6 +28,8 @@ class Ad extends Model
         'thermal',
         'laundry',
         'silent',
-        'status'
+        'status',
+        'created_at',
+        'updated_at'
     ];
 }

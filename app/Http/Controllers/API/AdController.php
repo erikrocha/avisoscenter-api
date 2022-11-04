@@ -124,7 +124,7 @@ class AdController extends Controller
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->where('category_id', '=', $request->input('category_id'))
-            ->orderBy('ads.created_at')
+            ->orderByDesc('ads.created_at')
             ->orderByDesc('ads.condition')
             ->get();
 
@@ -161,7 +161,8 @@ class AdController extends Controller
                 'thermal' => $request['thermal'],
                 'laundry' => $request['laundry'],
                 'silent' => $request['silent'],
-                'status' => $request['status']
+                'status' => $request['status'],
+                'created_at' => $request['datetime']
             ]);
     
             AdCategory::create([
