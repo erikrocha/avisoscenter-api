@@ -45,22 +45,15 @@ class AdController extends Controller
 
     public function searchAdCategories(Request $request)
     {
-        $aaa = 'aaa';
-        $sac = AdCategory::select('*',  'ads.created_at as datetime')
+        $sac = AdCategory::select('*',  'ads.created_at as date')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            // ->orderByDesc('documents.created_at')
             ->where('ad_id', '=', $request->input('ad_id'))
             ->get();
         
         return response()->json([
-            // 'count' => count($sac),
-            // 'items' => $sac
-
             'count' => count($sac),
-            'saludo' => $this->relativetime('2022/11/5 03:44'),
             'items' => $sac
-            // ['foo'=>'bar']
         ]);
     }
 
