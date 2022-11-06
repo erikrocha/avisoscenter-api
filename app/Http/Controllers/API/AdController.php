@@ -45,6 +45,7 @@ class AdController extends Controller
 
     public function searchAdCategories(Request $request)
     {
+        $aaa = 'aaa';
         $sac = AdCategory::select('*',  'ads.created_at as datetime')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
@@ -53,8 +54,13 @@ class AdController extends Controller
             ->get();
         
         return response()->json([
+            // 'count' => count($sac),
+            // 'items' => $sac
+
             'count' => count($sac),
+            'saludo' => $this->relativetime('2022/11/5 03:44'),
             'items' => $sac
+            // ['foo'=>'bar']
         ]);
     }
 
@@ -89,11 +95,13 @@ class AdController extends Controller
 
     public function getRents(Request $request)
     {
-        $rents = AdCategory::select('*')
+        $rents = AdCategory::select('*', 'ads.created_at as datetime')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            // ->orderByDesc('documents.created_at')
+            ->where('ads.status', '=', 1)
             ->where('category_id', '=', $request->input('category_id'))
+            ->orderByDesc('ads.condition')
+            ->orderByDesc('ads.created_at')
             ->get();
         
         return response()->json([

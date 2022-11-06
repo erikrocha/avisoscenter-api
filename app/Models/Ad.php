@@ -32,4 +32,9 @@ class Ad extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function saludo($s)
+    {
+        return 'hola ' . $s;
+    }
 }
