@@ -32,6 +32,7 @@ return new class extends Migration
             $table->boolean('thermal')->nullable();
             $table->boolean('laundry')->nullable();
             $table->boolean('silent')->nullable();
+            $table->boolean('cook')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
@@ -62,6 +63,7 @@ return new class extends Migration
             'pets' => 1,
             'wifi' => 1,
             'parking_moto' => 1,
+            'cook' => 1,
             'status' => 1,
             'created_at' => '2022-11-01'
         ]);
@@ -99,8 +101,9 @@ return new class extends Migration
             'longitude' => '-70.1301561',
             'condition' => 'paid',
             'type' => 'roombath',
-            'bath' => '1',
-            'wifi' => '1',
+            'bath' => 1,
+            'wifi' => 1,
+            'cook' => 1,
             'status' => 1,
             'created_at' => '2022-11-02'
         ]);

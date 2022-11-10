@@ -28,13 +28,9 @@ class Ad extends Model
         'thermal',
         'laundry',
         'silent',
+        'cook',
         'status',
         'created_at',
         'updated_at'
     ];
-
-    public function saludo($s)
-    {
-        return 'hola ' . $s;
-    }
 }
