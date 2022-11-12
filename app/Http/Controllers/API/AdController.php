@@ -103,6 +103,20 @@ class AdController extends Controller
         ]);
     }
 
+    public function getAd(Request $request)
+    {
+        $ads = Ad::select('*', 'ads.created_at as date')
+            ->where('ads.status', '=', 1)
+            ->where('id', '=', $request->input('ad_id'))
+            ->orderByDesc('ads.created_at')
+            ->get();
+        
+        return response()->json([
+            'count' => count($ads),
+            'items' => $ads
+        ]);   
+    }
+
     public function getRentsWithLocation(Request $request)
     {
         $rentsWithLocation = AdCategory::select('*', 'ads.created_at as date')

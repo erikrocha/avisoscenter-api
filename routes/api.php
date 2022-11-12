@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('ads', [AdController::class, 'index']);
 Route::get('searchMapFromAd', [AdController::class, 'searchMapFromAd']);
 Route::get('getRents', [AdController::class, 'getRents']);
+Route::get('getAd', [AdController::class, 'getAd']);
 Route::get('getRentsWithLocation', [AdController::class, 'getRentsWithLocation']);
 Route::get('getAdsFromCategory', [AdController::class, 'getAdsFromCategory']);
 Route::post('postAd', [AdController::class, 'postAd']);
