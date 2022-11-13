@@ -79,7 +79,8 @@ class AdController extends Controller
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->where('ads.status', '=', 1)
-            ->orderByDesc('ads.id')
+            ->orderByDesc('ads.condition')
+            ->orderByDesc('ads.created_at')
             ->get();
         
         return response()->json([
