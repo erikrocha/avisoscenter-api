@@ -15,20 +15,7 @@ use DB;
 
 class AdController extends Controller
 {
-    public function index()
-    {
-        $ads = AdCategory::select('*', 'ads.created_at as ads_created_at')
-            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
-            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            ->orderByDesc('ads.id')
-            ->get();
-        
-        return response()->json([
-            'count' => count($ads),
-            'items' => $ads
-        ]);
-    }
-
+    
     public function adPhones()
     {
         $adPhones = AdPhone::select('*')
@@ -83,6 +70,21 @@ class AdController extends Controller
         return response()->json([
             'count' => count($map),
             'items' => $map,
+        ]);
+    }
+
+    public function getAllAds()
+    {
+        $ads = AdCategory::select('*', 'ads.created_at as date')
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->where('ads.status', '=', 1)
+            ->orderByDesc('ads.id')
+            ->get();
+        
+        return response()->json([
+            'count' => count($ads),
+            'items' => $ads
         ]);
     }
 
