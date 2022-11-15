@@ -8,7 +8,7 @@ use App\Models\AdImage;
 
 class ImageController extends Controller
 {
-    public function searchImagesFromAd(Request $request)
+    public function getImagesFromAd(Request $request)
     {
         $ad_id = $request->input('ad_id');
         $images = AdImage::select('*')

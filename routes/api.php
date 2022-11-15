@@ -23,22 +23,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 # ads
 Route::get('getAllAds', [AdController::class, 'getAllAds']);
-Route::get('searchMapFromAd', [AdController::class, 'searchMapFromAd']);
+Route::get('getMapFromId', [AdController::class, 'getMapFromId']);
 Route::get('getRents', [AdController::class, 'getRents']);
-Route::get('getAd', [AdController::class, 'getAd']);
-Route::get('getRentsWithLocation', [AdController::class, 'getRentsWithLocation']);
+Route::get('getAdFromId', [AdController::class, 'getAdFromId']);
+Route::get('getAdCategories', [AdController::class, 'getAdCategories']);
+Route::get('getAdPhones', [AdController::class, 'getAdPhones']);
 Route::get('getAdsFromCategory', [AdController::class, 'getAdsFromCategory']);
+Route::get('getRentsWithLocation', [AdController::class, 'getRentsWithLocation']);
+
 Route::post('postAd', [AdController::class, 'postAd']);
 
-
 # adPhones
-Route::get('adPhones', [AdController::class, 'adPhones']);
-Route::get('searchAdCategories', [AdController::class, 'searchAdCategories']);
-Route::get('searchAdPhones', [AdController::class, 'searchAdPhones']);
+// Route::get('adPhones', [AdController::class, 'adPhones']);
+
 
 # users
 Route::get('users', [UserController::class, 'index']);
 Route::post('users', [UserController::class, 'store']);
 
 # images
-Route::get('images', [ImageController::class, 'searchImagesFromAd']);
+Route::get('getImagesFromAd', [ImageController::class, 'getImagesFromAd']);

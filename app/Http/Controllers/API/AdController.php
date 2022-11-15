@@ -15,64 +15,7 @@ use DB;
 
 class AdController extends Controller
 {
-    
-    public function adPhones()
-    {
-        $adPhones = AdPhone::select('*')
-            ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
-            ->join('phones', 'phones.id', '=', 'ad_phones.phone_id')
-            // ->orderByDesc('documents.created_at')
-            ->get();
-        
-        return response()->json([
-            'count' => count($adPhones),
-            'items' => $adPhones
-        ]);
-    }
-
-    public function searchAdCategories(Request $request)
-    {
-        $sac = AdCategory::select('*',  'ads.created_at as date')
-            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
-            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            ->where('ad_id', '=', $request->input('ad_id'))
-            ->get();
-        
-        return response()->json([
-            'count' => count($sac),
-            'items' => $sac
-        ]);
-    }
-
-    public function searchAdPhones(Request $request)
-    {
-        $ad_id = $request->input('ad_id');
-        $sap = AdPhone::select('*')
-            ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
-            ->join('phones', 'phones.id', '=', 'ad_phones.phone_id')
-            // ->orderByDesc('documents.created_at')
-            ->where('ad_id', '=', $ad_id)
-            ->get();
-        
-        return response()->json([
-            'count' => count($sap),
-            'items' => $sap
-        ]);
-    }
-    
-    public function searchMapFromAd(Request $request)
-    {
-        $map = Ad::select('*')
-            ->where('id', '=', $request->input('ad_id'))
-            ->whereNotNull('latitude')
-            ->get();
-        
-        return response()->json([
-            'count' => count($map),
-            'items' => $map,
-        ]);
-    }
-
+    /* frm_all */
     public function getAllAds()
     {
         $ads = AdCategory::select('*', 'ads.created_at as date')
@@ -89,24 +32,8 @@ class AdController extends Controller
         ]);
     }
 
-    public function getRents(Request $request)
-    {
-        $rents = AdCategory::select('*', 'ads.created_at as date')
-            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
-            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            ->where('ads.status', '=', 1)
-            ->where('category_id', '=', $request->input('category_id'))
-            ->orderByDesc('ads.condition')
-            ->orderByDesc('ads.created_at')
-            ->get();
-        
-        return response()->json([
-            'count' => count($rents),
-            'items' => $rents
-        ]);
-    }
-
-    public function getAd(Request $request)
+    /* frm_ad_details */
+    public function getAdFromId(Request $request)
     {
         $ads = Ad::select('*', 'ads.created_at as date')
             ->where('ads.status', '=', 1)
@@ -120,13 +47,32 @@ class AdController extends Controller
         ]);   
     }
 
-    public function getRentsWithLocation(Request $request)
+    /* frm_rents : show in lsv_ads */    
+    public function getRents()
+    {
+        $rents = AdCategory::select('*', 'ads.created_at as date')
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->where('ads.status', '=', 1)
+            ->where('category_id', '=', 2)
+            ->orderByDesc('ads.condition')
+            ->orderByDesc('ads.created_at')
+            ->get();
+        
+        return response()->json([
+            'count' => count($rents),
+            'items' => $rents
+        ]);
+    }
+    
+    /* frm_rents : show in mav_map*/
+    public function getRentsWithLocation()
     {
         $rentsWithLocation = AdCategory::select('*', 'ads.created_at as date')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->whereNotNull('latitude')
-            ->where('category_id', '=', $request->input('category_id'))
+            ->where('category_id', '=', 2)
             ->get();
         
         return response()->json([
@@ -134,9 +80,8 @@ class AdController extends Controller
             'items' => $rentsWithLocation
         ]);
     }
-    // ----------------------------------------------------------------------------------------------------
-    // getAdsFromCategory
-    // ----------------------------------------------------------------------------------------------------
+    
+    /* frm_ads_from_category */
     public function getAdsFromCategory(Request $request)
     {
         $needs = AdCategory::select('*', 'ads.created_at as date')
@@ -154,9 +99,63 @@ class AdController extends Controller
             ]);
     }
 
-    // ----------------------------------------------------------------------------------------------------
-    // postAd
-    // ----------------------------------------------------------------------------------------------------
+
+    // public function adPhones()
+    // {
+    //     $adPhones = AdPhone::select('*')
+    //         ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
+    //         ->join('phones', 'phones.id', '=', 'ad_phones.phone_id')
+    //         // ->orderByDesc('documents.created_at')
+    //         ->get();
+        
+    //     return response()->json([
+    //         'count' => count($adPhones),
+    //         'items' => $adPhones
+    //     ]);
+    // }
+
+    public function getAdCategories(Request $request)
+    {
+        $sac = AdCategory::select('*',  'ads.created_at as date')
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->where('ad_id', '=', $request->input('ad_id'))
+            ->get();
+        
+        return response()->json([
+            'count' => count($sac),
+            'items' => $sac
+        ]);
+    }
+
+    public function getAdPhones(Request $request)
+    {
+        $sap = AdPhone::select('*')
+            ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
+            ->join('phones', 'phones.id', '=', 'ad_phones.phone_id')
+            // ->orderByDesc('documents.created_at')
+            ->where('ad_id', '=', $request->input('ad_id'))
+            ->get();
+        
+        return response()->json([
+            'count' => count($sap),
+            'items' => $sap
+        ]);
+    }
+    
+    public function getMapFromId(Request $request)
+    {
+        $map = Ad::select('*')
+            ->where('id', '=', $request->input('id'))
+            ->whereNotNull('latitude')
+            ->get();
+        
+        return response()->json([
+            'count' => count($map),
+            'items' => $map,
+        ]);
+    }
+   
     public function postAd(Request $request)
     {
         try
