@@ -146,7 +146,7 @@ class AdController extends Controller
     public function getMapFromId(Request $request)
     {
         $map = Ad::select('*')
-            ->where('id', '=', $request->input('id'))
+            ->where('id', '=', $request->input('ad_id'))
             ->whereNotNull('latitude')
             ->get();
         
