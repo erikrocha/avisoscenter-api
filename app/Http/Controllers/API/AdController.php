@@ -190,24 +190,43 @@ class AdController extends Controller
             ]);
     
             // phones
-            $phone = Phone::select('*')
-                ->where('number', '=', $request->input('phone'))
-                ->get();
+            // $phone = Phone::select('*')
+            //     ->where('number', '=', $request->input('phone'))
+            //     ->get();
             
-            if (count($phone) == 0){
-                $p = Phone::create([
-                    'number' => $request->input('phone')
-                ]);            
+            // if (count($phone) == 0){
+            //     $p = Phone::create([
+            //         'number' => $request->input('phone')
+            //     ]);            
     
+            //     AdPhone::create([
+            //         'ad_id' => $ad->id,
+            //         'phone_id' => $p->id
+            //     ]);
+            // } else {
+            //     $phone_id = Phone::where('number', $request->input('phone'))->first()->id;
+            //     AdPhone::create([
+            //         'ad_id' => $ad->id,
+            //         'phone_id' => $phone_id
+            //     ]);
+            // }
+
+            // phones
+            $phones = $request->input('phones');
+            foreach($phones as $item){
+                $phone = Phone::select('*')
+                    ->where('number', '=', $item['phone'])
+                    ->first();
+                
+                if (!$phone){
+                    $phone = Phone::create([
+                        'number' => $item['phone']
+                    ]);            
+                }
+
                 AdPhone::create([
                     'ad_id' => $ad->id,
-                    'phone_id' => $p->id
-                ]);
-            } else {
-                $phone_id = Phone::where('number', $request->input('phone'))->first()->id;
-                AdPhone::create([
-                    'ad_id' => $ad->id,
-                    'phone_id' => $phone_id
+                    'phone_id' => $phone->id
                 ]);
             }
 
