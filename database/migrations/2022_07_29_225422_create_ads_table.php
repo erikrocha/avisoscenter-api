@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('latitude', 32)->nullable();
             $table->string('longitude', 32)->nullable();
             $table->char('condition', 8)->nullable();
-            $table->char('type', 16)->nullable();
+            $table->unsignedBigInteger('type_id');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
             $table->boolean('isIA')->default(0);
             $table->boolean('bath')->nullable();
             $table->boolean('pets')->nullable();
@@ -58,7 +59,8 @@ return new class extends Migration
             'latitude' => '-15.5015139',
             'longitude' => '-70.1278192',
             'condition' => 'free',
-            'type' => 'roombath',
+            // 'type' => 'roombath',
+            'type_id' => 2,
             'bath' => 1,
             'pets' => 1,
             'wifi' => 1,
@@ -100,7 +102,7 @@ return new class extends Migration
             'latitude' => '-15.4862739',
             'longitude' => '-70.1301561',
             'condition' => 'paid',
-            'type' => 'roombath',
+            'type_id' => 2,
             'bath' => 1,
             'wifi' => 1,
             'cook' => 1,
@@ -115,7 +117,7 @@ return new class extends Migration
             'latitude' => '-15.485531',
             'longitude' => '-70.137020',
             'condition' => 'paid',
-            'type' => 'room',
+            'type_id' => 1,
             'status' => 1,
             'created_at' => '2022-11-02'
         ]);
@@ -133,7 +135,7 @@ return new class extends Migration
             'latitude' => '-15.487256',
             'longitude' => '-70.134653',
             'condition' => 'paid',
-            'type' => 'house',
+            'type_id' => 5,
             'bath' => '1',
             'pets' => '1',
             'parking_moto' => '1',
@@ -150,7 +152,7 @@ return new class extends Migration
             'latitude' => '-15.490657',
             'longitude' => '-70.131152',
             'condition' => 'free',
-            'type' => 'departament',
+            'type_id' => 4,
             'bath' => '1',
             'pets' => '1',
             'wifi' => '1',
@@ -171,7 +173,7 @@ return new class extends Migration
             'longitude' => '-70.1387445',
             'condition' => 'free',
             'isIA' => 1,
-            'type' => 'minidepartament',
+            'type_id' => 3,
             'bath' => '1',
             'pets' => '1',
             'wifi' => '1',
@@ -189,7 +191,7 @@ return new class extends Migration
             'longitude' => '-70.133270',
             'condition' => 'free',
             'isIA' => 1,
-            'type' => 'local',
+            'type_id' => 6,
             'status' => 1,
             'created_at' => '2022-11-03'
         ]);
@@ -201,7 +203,7 @@ return new class extends Migration
             'latitude' => '-15.502506',
             'longitude' => '-70.133162',
             'condition' => 'paid',
-            'type' => 'other',
+            'type_id' => 9,
             'status' => 1,
             'created_at' => '2022-11-03'
         ]);
