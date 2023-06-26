@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('latitude', 32)->nullable();
             $table->string('longitude', 32)->nullable();
             $table->char('condition', 8)->nullable();
-            $table->unsignedBigInteger('type_id');
+            $table->unsignedBigInteger('type_id')->nullable();
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
             $table->boolean('isIA')->default(0);
             $table->boolean('bath')->nullable();

@@ -18,9 +18,10 @@ class AdController extends Controller
     /* frm_all */
     public function getAllAds()
     {
-        $ads = AdCategory::select('*', 'ads.created_at as date')
+        $ads = AdCategory::select('*', 'categories.name as category_name', 'types.name as type_name', 'ads.created_at as date', )
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->leftJoin('types', 'ads.type_id', '=', 'types.id')
             ->where('ads.status', '=', 1)
             ->orderByDesc('ads.condition')
             ->orderByDesc('ads.created_at')
@@ -35,16 +36,23 @@ class AdController extends Controller
     /* frm_ad_details */
     public function getAdFromId(Request $request)
     {
-        $ads = Ad::select('*', 'ads.created_at as date')
+        $ads = Ad::select('*', 
+                'ads.id as ad_id',
+                'ads.created_at as date')
+            ->join('types', 'ads.type_id', '=', 'types.id')
             ->where('ads.status', '=', 1)
-            ->where('id', '=', $request->input('ad_id'))
+            ->where('ads.id', '=', $request->input('ad_id'))
             ->orderByDesc('ads.created_at')
-            ->get();
+            ->first();
         
-        return response()->json([
-            'count' => count($ads),
-            'items' => $ads
-        ]);   
+        $count = ($ads !== null) ? 1 : 0;            
+
+        return $ads;
+
+        // return response()->json([
+        //     'count' => $count,
+        //     'items' => $ads
+        // ]);   
     }
 
     /* frm_rents : show in lsv_ads */    
