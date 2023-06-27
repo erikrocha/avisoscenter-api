@@ -76,11 +76,16 @@ class AdController extends Controller
     /* frm_rents : show in mav_map*/
     public function getRentsWithLocation()
     {
-        $rentsWithLocation = AdCategory::select('*', 'ads.created_at as date')
+        $rentsWithLocation = AdCategory::select(
+                '*', 
+                'categories.name as category_name',
+                'types.name as type_name',
+                'ads.created_at as date')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->leftJoin('types', 'types.id', '=', 'ads.type_id')
             ->whereNotNull('latitude')
-            ->where('category_id', '=', 2)
+            ->where('categories.name', '=', 'ALQUILO')
             ->get();
         
         return response()->json([
