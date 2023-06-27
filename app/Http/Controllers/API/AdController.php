@@ -97,9 +97,14 @@ class AdController extends Controller
     /* frm_ads_from_category */
     public function getAdsFromCategory(Request $request)
     {
-        $needs = AdCategory::select('*', 'ads.created_at as date')
+        $needs = AdCategory::select(
+                '*', 
+                'categories.name as category_name',
+                'types.name as type_name',
+                'ads.created_at as date')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->leftJoin('types', 'types.id', '=', 'ads.type_id')
             ->where('category_id', '=', $request->input('category_id'))
             ->where('ads.status', '=', 1)
             ->orderByDesc('ads.condition')
@@ -127,26 +132,27 @@ class AdController extends Controller
     //     ]);
     // }
 
-    public function getAdCategories(Request $request)
-    {
-        $sac = AdCategory::select('*',  'ads.created_at as date')
-            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
-            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            ->where('ad_id', '=', $request->input('ad_id'))
-            ->get();
+    /* search a ad from ad_id */
+    // public function getAdCategories(Request $request)
+    // {
+    //     $sac = AdCategory::select('*',  'ads.created_at as date')
+    //         ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+    //         ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+    //         ->where('ad_id', '=', $request->input('ad_id'))
+    //         ->get();
         
-        return response()->json([
-            'count' => count($sac),
-            'items' => $sac
-        ]);
-    }
+    //     return response()->json([
+    //         'count' => count($sac),
+    //         'items' => $sac
+    //     ]);
+    // }
 
+    /* search a phone from ad_id */
     public function getAdPhones(Request $request)
     {
         $sap = AdPhone::select('*')
             ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
             ->join('phones', 'phones.id', '=', 'ad_phones.phone_id')
-            // ->orderByDesc('documents.created_at')
             ->where('ad_id', '=', $request->input('ad_id'))
             ->get();
         
