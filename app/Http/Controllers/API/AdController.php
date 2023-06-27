@@ -53,9 +53,14 @@ class AdController extends Controller
     /* frm_rents : show in lsv_ads */    
     public function getRents()
     {
-        $rents = AdCategory::select('*', 'ads.created_at as date')
+        $rents = AdCategory::select(
+                '*', 
+                'categories.name as category_name',
+                'types.name as type_name',
+                'ads.created_at as date')
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->leftJoin('types', 'types.id', '=', 'ads.type_id')
             ->where('ads.status', '=', 1)
             ->where('category_id', '=', 2)
             ->orderByDesc('ads.condition')
