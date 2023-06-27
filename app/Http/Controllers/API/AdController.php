@@ -38,21 +38,16 @@ class AdController extends Controller
     {
         $ads = Ad::select('*', 
                 'ads.id as ad_id',
-                'ads.created_at as date')
-            ->join('types', 'ads.type_id', '=', 'types.id')
+                'ads.created_at as date',
+                'types.name as type_name')
+            ->leftJoin('types', 'ads.type_id', '=', 'types.id')
             ->where('ads.status', '=', 1)
             ->where('ads.id', '=', $request->input('ad_id'))
             ->orderByDesc('ads.created_at')
             ->first();
         
         $count = ($ads !== null) ? 1 : 0;            
-
         return $ads;
-
-        // return response()->json([
-        //     'count' => $count,
-        //     'items' => $ads
-        // ]);   
     }
 
     /* frm_rents : show in lsv_ads */    
