@@ -18,7 +18,7 @@ class Ad extends Model
         'latitude',
         'longitude',
         'condition',
-        'type',
+        'type_id',
         'bath',
         'pets',
         'wifi',
