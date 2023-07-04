@@ -36,17 +36,29 @@ class AdController extends Controller
     /* frm_ad_details */
     public function getAdFromId(Request $request)
     {
-        $ads = Ad::select('*', 
-                'ads.id as ad_id',
-                'ads.created_at as date',
-                'types.name as type_name')
-            ->leftJoin('types', 'ads.type_id', '=', 'types.id')
+        // $ads = Ad::select('*', 
+        //         'ads.id as ad_id',
+        //         'ads.created_at as date',
+        //         'types.name as type_name')
+        //     ->leftJoin('types', 'ads.type_id', '=', 'types.id')
+        //     ->where('ads.status', '=', 1)
+        //     ->where('ads.id', '=', $request->input('ad_id'))
+        //     ->orderByDesc('ads.created_at')
+        //     ->first();
+
+        $ads = AdCategory::select('*',
+                'categories.name as category_name',
+                'types.name as type_name',
+                'ads.created_at as date'
+            )
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->leftJoin('types', 'types.id', '=', 'ads.type_id')
             ->where('ads.status', '=', 1)
-            ->where('ads.id', '=', $request->input('ad_id'))
-            ->orderByDesc('ads.created_at')
-            ->first();
+            ->where('ad_id', '=', $request->input('ad_id'))
+            ->get();
         
-        $count = ($ads !== null) ? 1 : 0;            
+        $count = ($ads !== null) ? 1 : 0;
         return $ads;
     }
 
