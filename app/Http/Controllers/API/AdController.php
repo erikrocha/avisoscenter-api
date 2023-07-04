@@ -56,7 +56,7 @@ class AdController extends Controller
             ->leftJoin('types', 'types.id', '=', 'ads.type_id')
             ->where('ads.status', '=', 1)
             ->where('ad_id', '=', $request->input('ad_id'))
-            ->get();
+            ->first();
         
         $count = ($ads !== null) ? 1 : 0;
         return $ads;
