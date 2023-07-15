@@ -131,9 +131,11 @@ class AdController extends Controller
 
     public function getAdsFromPhone(Request $request)
     {
-        $ads = AdPhone::select('*')
+        $ads = AdPhone::select('*', 'categories.name as category_name')
             ->join('phones', 'phones.id', '=', 'ad_phones.phone_id')
             ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
+            ->join('ad_categories', 'ad_categories.ad_id', '=', 'ads.id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->where('phones.number', 'LIKE', '%' . $request->input('number') . '%')
             ->get();
         
