@@ -129,6 +129,19 @@ class AdController extends Controller
             ]);
     }
 
+    public function getAdsFromPhone(Request $request)
+    {
+        $ads = AdPhone::select('*')
+            ->join('phones', 'phones.id', '=', 'ad_phones.phone_id')
+            ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
+            ->where('phones.number', 'LIKE', '%' . $request->input('number') . '%')
+            ->get();
+        
+        return response()->json([
+            'count' => count($ads),
+            'items' => $ads
+        ]);
+    }
 
     // public function adPhones()
     // {
@@ -173,7 +186,7 @@ class AdController extends Controller
             'items' => $sap
         ]);
     }
-    
+
     public function getMapFromId(Request $request)
     {
         $map = Ad::select('*')
