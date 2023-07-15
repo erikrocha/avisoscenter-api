@@ -27,7 +27,7 @@ Route::get('getMapFromId', [AdController::class, 'getMapFromId']);
 Route::get('getRents', [AdController::class, 'getRents']);
 Route::get('getAdFromId', [AdController::class, 'getAdFromId']);
 Route::get('getAdCategories', [AdController::class, 'getAdCategories']);
-Route::get('getAdPhones', [AdController::class, 'getAdPhones']);
+Route::get('getPhonesFromId', [AdController::class, 'getPhonesFromId']);
 Route::get('getAdsFromCategory', [AdController::class, 'getAdsFromCategory']);
 Route::get('getRentsWithLocation', [AdController::class, 'getRentsWithLocation']);
 

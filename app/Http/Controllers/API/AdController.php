@@ -160,7 +160,7 @@ class AdController extends Controller
     // }
 
     /* search a phone from ad_id */
-    public function getAdPhones(Request $request)
+    public function getPhonesFromId(Request $request)
     {
         $sap = AdPhone::select('*')
             ->join('ads', 'ads.id', '=', 'ad_phones.ad_id')
