@@ -311,4 +311,31 @@ class AdController extends Controller
         // return $ad->id;
         // return $request->all();
     }
+
+    public function update(Request $request, $id)
+    {
+        $ad = Ad::findOrFail($id);
+        $ad->update([
+            'type_id'       => $request->input('type_id'),
+            'body'          => $request->input('body'),
+            'address'       => $request->input('address'),
+            'latitude'      => $request->input('latitude'),
+            'longitude'     => $request->input('longitude'),
+            'condition'     => $request->input('condition'),
+            'isIA'          => $request->input('isIA'),
+            'price'         => $request->input('price'),
+            'bath'          => $request->input('bath'),
+            'wifi'          => $request->input('wifi'),
+            'cable'         => $request->input('cable'),
+            'parking_moto'  => $request->input('parking_moto'),
+            'parking_car'   => $request->input('parking_car'),
+            'thermal'       => $request->input('thermal'),
+            'laundry'       => $request->input('laundry'),
+            'silent'        => $request->input('silent'),
+            'pets'          => $request->input('pets'),
+            'status'        => $request->input('status')
+        ]);
+
+        return $ad;
+    }
 }

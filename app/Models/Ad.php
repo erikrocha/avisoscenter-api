@@ -19,6 +19,7 @@ class Ad extends Model
         'longitude',
         'condition',
         'type_id',
+        'isIA',
         'bath',
         'pets',
         'wifi',
