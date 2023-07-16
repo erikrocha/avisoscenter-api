@@ -118,7 +118,9 @@ class AdController extends Controller
                 '*', 
                 'categories.name as category_name',
                 'types.name as type_name',
-                'ads.created_at as date')
+                'ads.created_at as date',
+                'ads.status as ad_status'
+            )
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->leftJoin('types', 'types.id', '=', 'ads.type_id')
