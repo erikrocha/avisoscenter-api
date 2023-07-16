@@ -223,6 +223,7 @@ class AdController extends Controller
                 'longitude' => $request['longitude'],
                 'condition' => $request['condition'],
                 'type_id' => $request['type_id'],
+                'isIA' => $request['isIA'],
                 'bath' => $request['bath'],
                 'pets' => $request['pets'],
                 'wifi' => $request['wifi'],
