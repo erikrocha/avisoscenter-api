@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 # ads
 Route::get('getAllAds', [AdController::class, 'getAllAds']);
+Route::get('getAllAdsWithoutStatus', [AdController::class, 'getAllAdsWithoutStatus']);
 Route::get('getMapFromId', [AdController::class, 'getMapFromId']);
 Route::get('getRents', [AdController::class, 'getRents']);
 Route::get('getAdFromId', [AdController::class, 'getAdFromId']);

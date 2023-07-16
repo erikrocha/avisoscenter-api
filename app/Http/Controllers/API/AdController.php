@@ -38,6 +38,26 @@ class AdController extends Controller
         ]);
     }
 
+    public function getAllAdsWithoutStatus()
+    {
+        $ads = AdCategory::select('*', 
+                'categories.name as category_name', 
+                'types.name as type_name', 
+                'ads.created_at as date',
+                'ads.status as ad_status'
+            )
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->leftJoin('types', 'ads.type_id', '=', 'types.id')
+            ->orderByDesc('ads.created_at')
+            ->get();
+        
+        return response()->json([
+            'count' => count($ads),
+            'items' => $ads
+        ]);
+    }
+
     /* frm_ad_details */
     public function getAdFromId(Request $request)
     {
