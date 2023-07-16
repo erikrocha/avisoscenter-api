@@ -9,7 +9,7 @@ class Ad extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    //public $timestamps = false;
 
     protected $fillable = [
         'body',
