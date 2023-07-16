@@ -125,6 +125,7 @@ class AdController extends Controller
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->leftJoin('types', 'types.id', '=', 'ads.type_id')
             ->whereNotNull('latitude')
+            ->where('ads.status', '=', 1)
             ->where('categories.name', '=', 'ALQUILO')
             ->get();
         
