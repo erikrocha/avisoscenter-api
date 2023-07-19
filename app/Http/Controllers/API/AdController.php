@@ -16,8 +16,11 @@ use DB;
 class AdController extends Controller
 {
     /* frm_all */
-    public function getAllAds()
+    public function getAllAds(Request $request)
     {
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 2);
+
         $ads = AdCategory::select('*', 
                 'categories.name as category_name', 
                 'types.name as type_name', 
@@ -29,12 +32,30 @@ class AdController extends Controller
             ->leftJoin('types', 'ads.type_id', '=', 'types.id')
             ->where('ads.status', '=', 1)
             ->orderByDesc('ads.condition')
-            ->orderByDesc('ads.created_at')
-            ->get();
+            ->orderByDesc('ads.created_at');
+            
+        $count = $ads->count();
+
+        $data = $ads->skip(($page - 1) * $pageSize)
+                        ->take($pageSize)
+                        ->get();
+
+            $lastPage = ceil($count / $pageSize);
+
+        $previousPage = $page > 1 ? $page - 1 : null;
+        $nextPage = $page < $lastPage ? $page + 1 : null;
+
+        $paginationLinks = [
+            'first_page' => 1,
+            'last_page' => $lastPage,
+            'previous_page' => $previousPage,
+            'next_page' => $nextPage,
+        ];
         
         return response()->json([
-            'count' => count($ads),
-            'items' => $ads
+            'count' => $count,
+            'items' => $data->toArray(),
+            'pagination_links' => $paginationLinks
         ]);
     }
 
@@ -140,13 +161,14 @@ class AdController extends Controller
     public function getAdsFromCategory(Request $request)
     {
         $page = $request->input('page', 1); // Obtener el número de página del request, por defecto es 1
-        $pageSize = $request->input('pageSize', 2); // Obtener el tamaño de página del request, por defecto es 10
+        $pageSize = $request->input('pageSize', 10); // Obtener el tamaño de página del request, por defecto es 10
 
         $needs = AdCategory::select(
                 '*', 
                 'categories.name as category_name',
                 'types.name as type_name',
-                'ads.created_at as date')
+                'ads.created_at as date'
+            )
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->leftJoin('types', 'types.id', '=', 'ads.type_id')
@@ -161,23 +183,23 @@ class AdController extends Controller
                           ->take($pageSize)
                           ->get(); // Obtener los registros de la página actual
 
-                          $lastPage = ceil($count / $pageSize); // Calcular el número de la última página
+        $lastPage = ceil($count / $pageSize); // Calcular el número de la última página
 
-            $previousPage = $page > 1 ? $page - 1 : null; // Calcular la página anterior
-            $nextPage = $page < $lastPage ? $page + 1 : null; // Calcular la página siguiente
+        $previousPage = $page > 1 ? $page - 1 : null; // Calcular la página anterior
+        $nextPage = $page < $lastPage ? $page + 1 : null; // Calcular la página siguiente
 
-            $paginationLinks = [
-                'first_page' => 1,
-                'last_page' => $lastPage,
-                'previous_page' => $previousPage,
-                'next_page' => $nextPage,
-            ];
+        $paginationLinks = [
+            'first_page' => 1,
+            'last_page' => $lastPage,
+            'previous_page' => $previousPage,
+            'next_page' => $nextPage,
+        ];
 
-            return response()->json([
-                'count' => $count,
-                'items' => $ads->toArray(),
-                'pagination_links' => $paginationLinks
-            ]);
+        return response()->json([
+            'count' => $count,
+            'items' => $ads->toArray(),
+            'pagination_links' => $paginationLinks
+        ]);
     }
 
     public function getAdsFromPhone(Request $request)
