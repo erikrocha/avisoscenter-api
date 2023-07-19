@@ -139,6 +139,9 @@ class AdController extends Controller
     /* frm_ads_from_category */
     public function getAdsFromCategory(Request $request)
     {
+        $page = $request->input('page', 1); // Obtener el número de página del request, por defecto es 1
+        $pageSize = $request->input('pageSize', 2); // Obtener el tamaño de página del request, por defecto es 10
+
         $needs = AdCategory::select(
                 '*', 
                 'categories.name as category_name',
@@ -150,12 +153,30 @@ class AdController extends Controller
             ->where('category_id', '=', $request->input('category_id'))
             ->where('ads.status', '=', 1)
             ->orderByDesc('ads.condition')
-            ->orderByDesc('ads.created_at')
-            ->get();
+            ->orderByDesc('ads.created_at');
+
+            $count = $needs->count(); // Obtener el número total de registros sin paginación
+
+            $ads = $needs->skip(($page - 1) * $pageSize)
+                          ->take($pageSize)
+                          ->get(); // Obtener los registros de la página actual
+
+                          $lastPage = ceil($count / $pageSize); // Calcular el número de la última página
+
+            $previousPage = $page > 1 ? $page - 1 : null; // Calcular la página anterior
+            $nextPage = $page < $lastPage ? $page + 1 : null; // Calcular la página siguiente
+
+            $paginationLinks = [
+                'first_page' => 1,
+                'last_page' => $lastPage,
+                'previous_page' => $previousPage,
+                'next_page' => $nextPage,
+            ];
 
             return response()->json([
-                'count' => count($needs),
-                'items' => $needs
+                'count' => $count,
+                'items' => $ads->toArray(),
+                'pagination_links' => $paginationLinks
             ]);
     }
 
