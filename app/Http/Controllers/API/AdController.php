@@ -202,6 +202,59 @@ class AdController extends Controller
         ]);
     }
 
+    /* frm_ads_from_category */
+    public function getAdsFromVehicles(Request $request)
+    {
+        $page = $request->input('page', 1); // Obtener el número de página del request, por defecto es 1
+        $pageSize = $request->input('pageSize', 10); // Obtener el tamaño de página del request, por defecto es 10
+
+        $needs = AdCategory::select(
+                '*', 
+                'categories.name as category_name',
+                'cities.name as city_name',
+                'brands.name as brand_name',
+                'models.name as model_name',
+                'types.slug as type_slug',
+                'types.name as type_name',
+                'ads.created_at as date',
+                'ads.status as ad_status'
+            )
+            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+            ->join('types', 'types.id', '=', 'ads.type_id')
+            ->join('cities', 'cities.id', '=', 'ads.city_id')
+            ->join('brands', 'brands.id', '=', 'ads.brand_id')
+            ->join('models', 'models.id', '=', 'ads.model_id')
+            ->where('types.slug', '=', 'vehicle')
+            ->where('ads.status', '=', 1)
+            ->orderByDesc('ads.condition')
+            ->orderByDesc('ads.created_at');
+
+            $count = $needs->count(); // Obtener el número total de registros sin paginación
+
+            $ads = $needs->skip(($page - 1) * $pageSize)
+                          ->take($pageSize)
+                          ->get(); // Obtener los registros de la página actual
+
+        $lastPage = ceil($count / $pageSize); // Calcular el número de la última página
+
+        $previousPage = $page > 1 ? $page - 1 : null; // Calcular la página anterior
+        $nextPage = $page < $lastPage ? $page + 1 : null; // Calcular la página siguiente
+
+        $paginationLinks = [
+            'first_page' => 1,
+            'last_page' => $lastPage,
+            'previous_page' => $previousPage,
+            'next_page' => $nextPage,
+        ];
+
+        return response()->json([
+            'count' => $count,
+            'items' => $ads->toArray(),
+            'pagination_links' => $paginationLinks
+        ]);
+    }
+
     public function getAdsFromPhone(Request $request)
     {
         $ads = AdPhone::select('*', 
