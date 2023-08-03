@@ -93,8 +93,13 @@ class AdController extends Controller
         //     ->orderByDesc('ads.created_at')
         //     ->first();
 
-        $ads = AdCategory::select('*',
+        $ads = AdCategory::select(
+                '*',
                 'categories.name as category_name',
+                'cities.name as city_name',
+                'brands.name as brand_name',
+                'models.name as model_name',
+                'types.slug as type_slug',
                 'types.name as type_name',
                 'ads.created_at as date',
                 'ads.status as ad_status'
@@ -102,6 +107,9 @@ class AdController extends Controller
             ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->leftJoin('types', 'types.id', '=', 'ads.type_id')
+            ->leftjoin('cities', 'cities.id', '=', 'ads.city_id')
+            ->leftjoin('brands', 'brands.id', '=', 'ads.brand_id')
+            ->leftjoin('models', 'models.id', '=', 'ads.model_id')
             // ->where('ads.status', '=', 1)
             ->where('ad_id', '=', $request->input('ad_id'))
             ->first();
