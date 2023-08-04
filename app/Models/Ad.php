@@ -12,6 +12,9 @@ class Ad extends Model
     //public $timestamps = false;
 
     protected $fillable = [
+        'city_id',
+        'brand_id',
+        'model_id',
         'body',
         'address',
         'price',
@@ -31,6 +34,13 @@ class Ad extends Model
         'silent',
         'cook',
         'status',
+        'currency',
+        'year',
+        'mileage',
+        'engine',
+        'fuel',
+        'transmission',
+        'color',
         'created_at',
         'updated_at'
     ];

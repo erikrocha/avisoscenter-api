@@ -342,12 +342,16 @@ class AdController extends Controller
    
     public function postAd(Request $request)
     {
+
         try
         {
             DB::beginTransaction();
 
             // ads
             $ad = Ad::create([
+                'city_id' => $request['city_id'], 
+                'brand_id' => $request['brand_id'], 
+                'model_id' => $request['model_id'],
                 'body' => $request['body'],
                 'address' => $request['address'],
                 'price' => $request['price'],
@@ -366,7 +370,14 @@ class AdController extends Controller
                 'laundry' => $request['laundry'],
                 'silent' => $request['silent'],
                 'status' => $request['status'],
-                'created_at' => $request['datetime']
+                'created_at' => $request['datetime'],
+                'currency' => $request['currency'],
+                'year' => $request['year'],
+                'mileage' => $request['mileage'],
+                'engine' => $request['engine'],
+                'fuel' => $request['fuel'],
+                'transmission' => $request['transmission'],
+                'color' => $request['color'],
             ]);
     
             AdCategory::create([
@@ -444,10 +455,11 @@ class AdController extends Controller
         }
         catch(\Exception $e)
         {
+            // return $e;
             DB::rollback();
         }
 
-        // return $ad->id;
+        return $ad->id;
         // return $request->all();
     }
 
@@ -455,6 +467,9 @@ class AdController extends Controller
     {
         $ad = Ad::findOrFail($id);
         $ad->update([
+            'city_id'       => $request->input('city_id'),
+            'brand_id'      => $request->input('brand_id'),
+            'model_id'      => $request->input('model_id'),
             'type_id'       => $request->input('type_id'),
             'body'          => $request->input('body'),
             'address'       => $request->input('address'),
@@ -472,7 +487,14 @@ class AdController extends Controller
             'laundry'       => $request->input('laundry'),
             'silent'        => $request->input('silent'),
             'pets'          => $request->input('pets'),
-            'status'        => $request->input('status')
+            'status'        => $request->input('status'),
+            'currency'      => $request->input('currency'),
+            'year'          => $request->input('year'),
+            'mileage'       => $request->input('mileage'),
+            'engine'        => $request->input('engine'),
+            'fuel'          => $request->input('fuel'),
+            'transmission'  => $request->input('transmission'),
+            'color'         => $request->input('color')
         ]);
 
         return $ad;
