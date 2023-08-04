@@ -37,6 +37,16 @@ Route::get('getAdsFromVehicles', [AdController::class, 'getAdsFromVehicles']);
 Route::post('postAd', [AdController::class, 'postAd']);
 Route::put('ads/{id}', [AdController::class, 'update']);
 
+# brand
+Route::get('getAllBrands', [AdController::class, 'getAllBrands']);
+Route::post('brandPost', [AdController::class, 'brandPost']);
+Route::put('brands/{id}', [AdController::class, 'brandUpdate']);
+
+# model
+Route::get('getAllModels', [AdController::class, 'getAllModels']);
+Route::get('getModelsByBrandId', [AdController::class, 'getModelsByBrandId']);
+Route::post('modelPost', [AdController::class, 'modelPost']);
+Route::put('models/{id}', [AdController::class, 'modelUpdate']);
 
 # adPhones
 // Route::get('adPhones', [AdController::class, 'adPhones']);

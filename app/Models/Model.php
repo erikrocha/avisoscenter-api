@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model as Modelo;
 class Model extends Modelo
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $fillable = [
         'brand_id',

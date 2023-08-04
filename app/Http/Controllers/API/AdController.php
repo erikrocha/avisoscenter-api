@@ -10,6 +10,8 @@ use App\Models\Image;
 use App\Models\AdCategory;
 use App\Models\AdPhone;
 use App\Models\AdImage;
+use App\Models\Brand;
+use App\Models\Model;
 use DB;
 
 
@@ -210,7 +212,6 @@ class AdController extends Controller
         ]);
     }
 
-    /* frm_ads_from_category */
     public function getAdsFromVehicles(Request $request)
     {
         $page = $request->input('page', 1); // Obtener el número de página del request, por defecto es 1
@@ -475,5 +476,93 @@ class AdController extends Controller
         ]);
 
         return $ad;
+    }
+
+    /* brands */
+    public function getAllBrands()
+    {
+        $brands = Brand::select('*')->get();
+
+        return response()->json([
+            'count' => count($brands),
+            'items' => $brands,
+        ]);
+    }
+
+    public function brandPost(Request $request)
+    {
+        $brand = Brand::create([
+            'name' => $request['name']
+        ]);
+
+        return $brand;
+    }
+
+    public function brandUpdate(Request $request, $id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->update([
+            'name'      => $request->input('name'),
+            'status'    => $request->input('status')
+        ]);
+
+        return $brand;
+    }
+
+    /* models */
+    public function getAllModels()
+    {
+        $models = Model::select(
+            'models.id AS model_id',
+            'brands.name AS name_brand',
+            'models.name AS name_model',
+            'models.status AS model_status'
+        )
+            ->join('brands', 'brands.id', '=', 'models.brand_id')
+            ->get();
+
+        return response()->json([
+            'count' => count($models),
+            'items' => $models,
+        ]);
+    }
+
+    public function getModelsByBrandId(Request $request)
+    {
+        $models = Model::select(
+            'models.id AS model_id',
+            'brands.name AS name_brand',
+            'models.name AS name_model',
+            'models.status AS model_status'
+        )
+            ->join('brands', 'brands.id', '=', 'models.brand_id')
+            ->where('brand_id', '=', $request->input('brand_id'))->get();
+
+        return response()->json([
+            'count' => count($models),
+            'items' => $models,
+        ]);
+    }
+
+    public function modelPost(Request $request)
+    {
+        $model = Model::create([
+            'brand_id'  => $request['brand_id'],
+            'name'      => $request['name'],
+        ]);
+
+        return $model;
+    }
+
+    public function modelUpdate(Request $request, $id)
+    {
+        $model = Model::findOrFail($id);
+        $model->update([
+            'brand_id'  => $request->input('brand_id'),
+            'name'      => $request->input('name'),
+            'status'    => $request->input('status')
+        ]);
+
+        return $model;
     }
 }
