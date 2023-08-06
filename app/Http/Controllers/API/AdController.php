@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Ad;
 use App\Models\Phone;
 use App\Models\Image;
@@ -212,6 +213,92 @@ class AdController extends Controller
         ]);
     }
 
+    public function getAdsFromVehiclesV2(Request $request)
+    {
+        $page = request()->input('page', 1);
+        $pageSize = request()->input('pageSize', 10);
+
+        // count
+        $count = Ad::has('categories')->whereHas('categories', function($query){
+            $query->where('type_id', 8);
+        })
+        ->where('status', 1)
+        ->count();
+
+        // Obtiene los anuncios con sus categorías e imágenes paginados de acuerdo a los parámetros recibidos.
+        $ads = Ad::with('type', 'brand', 'model', 'city', 'categories', 'images')
+            ->whereHas('categories', function($query){
+                $query->where('type_id', 8);
+            })
+            ->whereHas('categories', function($query){
+                $query->where('type_id', 8);
+            })
+            ->where('status', '=', 1)
+            ->orderByDesc('condition')
+            ->orderByDesc('created_at')
+            ->paginate($pageSize, ['*'], 'page', $page);
+
+        $data = $ads->map(function ($ad) {
+            // Obtenemos fecha
+            $date = $ad->created_at;
+            // Convertimos la fecha a objeto Carbon
+            $carbonDate = new Carbon($date);
+            // Cambiamos el formato de la fecha
+            $formattedDate = $carbonDate->format('Y-m-d H:i:s');
+
+            return [
+                'ad_id' => $ad->id,
+                'body' => $ad->body,
+                'address' => $ad->address,
+                'city_id' => $ad->city ? $ad->city->id : null,
+                'city_name' => $ad->city ? $ad->city->name : null,
+                'brand_id' => $ad->brand ? $ad->brand->id : null,
+                'brand_name' => $ad->brand ? $ad->brand->name : null,
+                'model_id' => $ad->model ? $ad->model->id : null,
+                'model_name' => $ad->model ? $ad->model->name : null,
+                'price' => $ad->price,
+                'latitude' => $ad->latitude,
+                'longitude' => $ad->longitude,
+                'condition' => $ad->condition,
+                'type_id' => $ad->type ? $ad->type->id : null,
+                'type_name' => $ad->type ? $ad->type->name : null,
+                'type_slug' => $ad->type ? $ad->type->slug : null,
+                'currency' => $ad->currency,
+                'year' => $ad->year,
+                'mileage' => $ad->mileage,
+                'engine' => $ad->engine,
+                'fuel' => $ad->fuel,
+                'transmission' => $ad->transmission,
+                'color' => $ad->color,
+                'date' => $formattedDate,
+                'ad_status' => $ad->status,
+                'categories' => $ad->categories->map(function ($category) {
+                    return [
+                        'category_id' => $category->id,
+                        'name' => $category->name
+                    ];
+                })->toArray(),
+                'images' => $ad->images->map(function ($image) {
+                    return ['url' => $image->url];
+                })->toArray(),
+            ];
+        });
+
+        // Genera los enlaces de paginación.
+        $paginationLinks = [
+            'first_page' => 1,
+            'last_page' => $ads->lastPage(),
+            'previous_page' => $ads->previousPageUrl(),
+            'next_page' => $ads->nextPageUrl(),
+        ];
+
+        return response()->json([
+            'count' => $count,
+            'items' => $data,
+            'pagination_links' => $paginationLinks,
+        ]);
+    }
+    
     public function getAdsFromVehicles(Request $request)
     {
         $page = $request->input('page', 1); // Obtener el número de página del request, por defecto es 1

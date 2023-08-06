@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Support\Facades\Log; // Agregar esta línea
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Escuchar el evento QueryExecuted para obtener la información de las consultas ejecutadas
+        // DB::listen(function (QueryExecuted $query) {
+        //     $sqlWithBindings = vsprintf(str_replace(['%', '?'], ['%%', "'%s'"], $query->sql), $query->bindings);
+        //     Log::info('Consulta SQL: ' . $sqlWithBindings);
+        // });
     }
 }

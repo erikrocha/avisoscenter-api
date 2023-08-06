@@ -13,4 +13,9 @@ class Image extends Model
         'description',
         'url'
     ];
+
+    public function ads()
+    {
+        return $this->belongsToMany(Post::class, 'ad_images', 'image_id', 'ad_id');
+    }
 }

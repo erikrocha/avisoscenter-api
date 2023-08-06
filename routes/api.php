@@ -48,6 +48,8 @@ Route::get('getModelsByBrandId', [AdController::class, 'getModelsByBrandId']);
 Route::post('modelPost', [AdController::class, 'modelPost']);
 Route::put('models/{id}', [AdController::class, 'modelUpdate']);
 
+Route::get('getAdsFromVehiclesV2', [AdController::class, 'getAdsFromVehiclesV2']);
+
 # adPhones
 // Route::get('adPhones', [AdController::class, 'adPhones']);
 
