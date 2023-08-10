@@ -33,6 +33,7 @@ Route::get('getAdsFromCategory', [AdController::class, 'getAdsFromCategory']);
 Route::get('getAdsFromPhone', [AdController::class, 'getAdsFromPhone']);
 Route::get('getRentsWithLocation', [AdController::class, 'getRentsWithLocation']);
 Route::get('getAdsFromVehicles', [AdController::class, 'getAdsFromVehicles']);
+Route::get('getAdsFromVehiclesV2', [AdController::class, 'getAdsFromVehiclesV2']);
 
 Route::post('postAd', [AdController::class, 'postAd']);
 Route::put('ads/{id}', [AdController::class, 'update']);
@@ -48,7 +49,8 @@ Route::get('getModelsByBrandId', [AdController::class, 'getModelsByBrandId']);
 Route::post('modelPost', [AdController::class, 'modelPost']);
 Route::put('models/{id}', [AdController::class, 'modelUpdate']);
 
-Route::get('getAdsFromVehiclesV2', [AdController::class, 'getAdsFromVehiclesV2']);
+# land
+Route::get('getLandsWithLocation', [AdController::class, 'getLandsWithLocation']);
 
 # adPhones
 // Route::get('adPhones', [AdController::class, 'adPhones']);

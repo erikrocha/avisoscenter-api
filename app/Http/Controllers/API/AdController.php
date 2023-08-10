@@ -167,6 +167,61 @@ class AdController extends Controller
             'items' => $rentsWithLocation
         ]);
     }
+
+    public function getLandsWithLocation(Request $request)
+    {
+        $count = Ad::has('categories')
+            ->where('status', '=', 1)
+            ->where('latitude', '<>', '')
+            ->whereHas('categories', function($query){
+                $query->where('type_id', 9);
+            })
+            ->count();
+
+        $ads = Ad::with('categories', 'city', 'type')
+            ->where('status', '=', 1)
+            ->where('latitude', '<>', '')
+            ->whereHas('categories', function($query){
+                $query->where('type_id', 9);
+            })
+            ->get();
+
+        $data = $ads->map(function($ad)
+        {
+            $date = $ad->created_at;
+            $carbonDate = new Carbon($date);
+            $formattedDate = $carbonDate->format('Y-m-d H:i:s');
+
+            return [
+                'ad_id' => $ad->id,
+                'city_id' => $ad->city ? $ad->city->id : null,
+                'city_name' => $ad->city ? $ad->city->name : null,
+                'body' => $ad->body,
+                'address' => $ad->address,
+                'price' => $ad->price,
+                'currency' => $ad->currency,
+                'latitude' => $ad->latitude,
+                'longitude' => $ad->longitude,
+                'condition' => $ad->condition,
+                'type_id' => $ad->type ? $ad->type->id : null,
+                'type_name' => $ad->type ? $ad->type->name : null,
+                'type_slug' => $ad->type ? $ad->type->slug : null,
+                'date' => $formattedDate,
+                'ad_status' => $ad->status,
+                'categories' => $ad->categories->map(function ($category) {
+                    return [
+                        'category_id' => $category->id,
+                        'name' => $category->name
+                    ];
+                })->toArray(),
+            ];
+        });
+
+        return response()->json([
+            'count' => $count,
+            'items' => $data
+        ]);
+    }
     
     /* frm_ads_from_category */
     public function getAdsFromCategory(Request $request)
