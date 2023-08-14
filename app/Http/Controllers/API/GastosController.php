@@ -16,6 +16,7 @@ class GastosController extends Controller
     public function getTransactions()
     {
         $t = Transaction::with('tcategories', 'user')
+            ->orderByDesc('created_at')
             ->get();
 
         $count = Transaction::has('tcategories')->count();
