@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Transaction;
 use App\Models\TCategory;
 use App\Models\TransactionTCategory;
@@ -20,6 +21,10 @@ class GastosController extends Controller
         $count = Transaction::has('tcategories')->count();
 
         $data = $t->map(function($t) {
+
+            $date = $t->created_at;
+            $carbonDate = new Carbon($date);
+            $formattedDate = $carbonDate->format('Y-m-d H:i:s');
             return [
                 'transaction_id' => $t->id,
                 'user_id' => $t->user_id,
@@ -27,7 +32,7 @@ class GastosController extends Controller
                 'description' => $t->description,
                 'amount' => $t->amount,
                 'type' => $t->type,
-                'date' => $t->created_at,
+                'date' => $formattedDate,
                 'tcategories' => $t->tcategories->map(function($tcategory){
                     return [
                         'tcategory_id' => $tcategory->id,
