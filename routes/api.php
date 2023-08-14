@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AdController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ImageController;
+use App\Http\Controllers\API\GastosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,3 +63,17 @@ Route::post('users', [UserController::class, 'store']);
 
 # images
 Route::get('getImagesFromAd', [ImageController::class, 'getImagesFromAd']);
+
+/** APP GASTOS */
+# transactions
+Route::get('getTransactions', [GastosController::class, 'getTransactions']);
+Route::post('postTransaction', [GastosController::class, 'postTransaction']);
+Route::put('transactions/{id}', [GastosController::class, 'putTransaction']);
+Route::get('inputsTransaction', [GastosController::class, 'inputsTransaction']);
+Route::get('outputsTransaction', [GastosController::class, 'outputsTransaction']);
+Route::get('balanceTransaction', [GastosController::class, 'balanceTransaction']);
+
+# tcategory
+Route::get('getTCategories', [GastosController::class, 'getTCategories']);
+Route::post('postTCategory', [GastosController::class, 'postTCategory']);
+Route::put('tcategories/{id}', [GastosController::class, 'putTCategory']);

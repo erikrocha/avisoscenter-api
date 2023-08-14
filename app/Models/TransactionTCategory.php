@@ -9,7 +9,8 @@ class TransactionTCategory extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    
+    protected $table = 'transaction_tcategories';
+
     protected $fillable = [
         'transaction_id',
         'tcategory_id'

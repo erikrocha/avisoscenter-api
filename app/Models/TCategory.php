@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TCategory extends Model
 {
     use HasFactory;
-
+    protected $table = 'tcategories';
+    public $timestamps = false;
+    
     protected $fillable = [
         'tc_name'
     ];
