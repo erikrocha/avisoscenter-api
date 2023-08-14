@@ -67,6 +67,7 @@ Route::get('getImagesFromAd', [ImageController::class, 'getImagesFromAd']);
 /** APP GASTOS */
 # transactions
 Route::get('getTransactions', [GastosController::class, 'getTransactions']);
+Route::get('getTransactionsByDay', [GastosController::class, 'getTransactionsByDay']);
 Route::post('postTransaction', [GastosController::class, 'postTransaction']);
 Route::put('transactions/{id}', [GastosController::class, 'putTransaction']);
 Route::get('inputsTransaction', [GastosController::class, 'inputsTransaction']);

@@ -49,6 +49,54 @@ class GastosController extends Controller
         ]);
     }
 
+    function getTransactionsByDay()
+    {
+        $count = Transaction::count();
+        Carbon::setLocale('es');
+
+        $transactions = Transaction::orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function ($transaction) {
+                return $transaction->created_at->format('l'); // 'l' devuelve el día de la semana
+            });
+
+        $nombreDias = [
+            'Sunday' => 'Domingo',
+            'Monday' => 'Lunes',
+            'Tuesday' => 'Martes',
+            'Wednesday' => 'Miércoles',
+            'Thursday' => 'Jueves',
+            'Friday' => 'Viernes',
+            'Saturday' => 'Sábado'
+        ];
+
+        $result = [];
+
+        foreach ($transactions as $day => $transactionsOfDay) {
+            $nombreDiaEnEspanol = $nombreDias[$day];
+            $dailyTransactions = [];
+            
+            foreach ($transactionsOfDay as $transaction) {
+                $dailyTransactions[] = [
+                    'transaction_id' => $transaction->id,
+                    'description' => $transaction->description,
+                    'amount' => $transaction->amount,
+                    'date' => $transaction->created_at
+                ];
+            }
+            
+            $result[] = [
+                'items'=> count($dailyTransactions),
+                'day' => $nombreDiaEnEspanol,
+                'transactions' => $dailyTransactions,
+            ];  
+        }
+        return response()->json([
+            'count' => $count,
+            'items' => $result
+        ]);
+    }
+
     public function postTransaction(Request $request)
     {
         try{
