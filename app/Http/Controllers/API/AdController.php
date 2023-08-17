@@ -121,6 +121,85 @@ class AdController extends Controller
         return $ads;
     }
 
+    public function getAdFromIdV2(Request $request)
+    {
+        $ad = Ad::with('categories', 'images', 'phones', 'city', 'type', 'brand', 'model')
+                ->where('id', '=', $request->input('id'))
+                ->first();
+        
+        // $data = $ad->map(function ($ad) {
+        //     return [
+        //         'ad_id' => $ad->id
+        //     ];
+        // });
+
+        if ($ad) {
+            $data = [
+                'ad_id'         => $ad->id,
+                'city_id'       => $ad->city ? $ad->city->id : null,
+                'city_name'     => $ad->city ? $ad->city->name : null,
+                'brand_id'      => $ad->brand ? $ad->brand->id : null,
+                'brand_name'    => $ad->brand ? $ad->brand->name : null,
+                'model_id'      => $ad->model ? $ad->model->id : null,
+                'model_name'    => $ad->model ? $ad->model->name : null,
+                'body'          => $ad->body,
+                'address'       => $ad->address,
+                'body'          => $ad->body,
+                'price'         => $ad->price,
+                'latitude'      => $ad->latitude,
+                'longitude'     => $ad->longitude,
+                'condition'     => $ad->condition,
+                'type_id'       => $ad->type ? $ad->type->id : null,
+                'type_name'     => $ad->type ? $ad->type->name : null,
+                'type_slug'     => $ad->type ? $ad->type->slug : null,
+                'isIA'          => $ad->isIA,
+                'condition'     => $ad->condition,
+                'bath'          => $ad->bath,
+                'pets'          => $ad->pets,
+                'wifi'          => $ad->wifi,
+                'cable'         => $ad->cable,
+                'parking_moto'  => $ad->parking_moto,
+                'parking_car'   => $ad->parking_car,
+                'thermal'       => $ad->thermal,
+                'laundry'       => $ad->laundry,
+                'silent'        => $ad->silent,
+                'cook'          => $ad->cook,
+                'currency'      => $ad->currency,
+                'year'          => $ad->year,
+                'mileage'       => $ad->mileage,
+                'engine'        => $ad->engine,
+                'fuel'          => $ad->fuel,
+                'transmission'  => $ad->transmission,
+                'color'         => $ad->color,
+                'date'          => $ad->created_at,
+                'ad_status'     => $ad->status,
+
+                'categories' => $ad->categories->map(function ($category) {
+                    return [
+                        'category_id' => $category->id,
+                        'name' => $category->name
+                    ];
+                })->toArray(),    
+                'images' => $ad->images->map(function ($image) {
+                    return [
+                        'image_id' => $image->id,
+                        'url' => $image->url
+                    ];
+                })->toArray(), 
+                'phones' => $ad->phones->map(function ($phone) {
+                    return [
+                        'phone_id' => $phone->id,
+                        'number' => $phone->number
+                    ];
+                })->toArray(), 
+            ];
+        } else {
+            $data = [];
+        }
+
+        return $data;
+    }
+
     /* frm_rents : show in lsv_ads */    
     public function getRents()
     {

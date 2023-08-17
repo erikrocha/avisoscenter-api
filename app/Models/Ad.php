@@ -78,4 +78,9 @@ class Ad extends Modelo
     {
         return $this->belongsToMany(Image::class, 'ad_images', 'ad_id', 'image_id');
     }
+
+    public function phones()
+    {
+        return $this->belongsToMany(Phone::class, 'ad_phones', 'ad_id', 'phone_id');
+    }
 }
