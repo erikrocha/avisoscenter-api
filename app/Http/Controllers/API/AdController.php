@@ -124,7 +124,7 @@ class AdController extends Controller
     public function getAdFromIdV2(Request $request)
     {
         $ad = Ad::with('categories', 'images', 'phones', 'city', 'type', 'brand', 'model')
-                ->where('id', '=', $request->input('id'))
+                ->where('id', '=', $request->input('ad_id'))
                 ->first();
         
         // $data = $ad->map(function ($ad) {
