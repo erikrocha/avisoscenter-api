@@ -13,8 +13,8 @@ use App\Models\AdPhone;
 use App\Models\AdImage;
 use App\Models\Brand;
 use App\Models\Model;
+use App\Models\Popup;
 use DB;
-
 
 class AdController extends Controller
 {
@@ -807,5 +807,17 @@ class AdController extends Controller
         ]);
 
         return $model;
+    }
+
+    public function getpopups()
+    {
+        $popups = Popup::select('*')
+        ->where('status', '=', 1)
+        ->get();
+    
+        return response()->json([
+            'count' => count($popups),
+            'items' => $popups
+        ]);
     }
 }
