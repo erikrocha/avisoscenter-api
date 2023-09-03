@@ -65,6 +65,9 @@ Route::post('users', [UserController::class, 'store']);
 # images
 Route::get('getImagesFromAd', [ImageController::class, 'getImagesFromAd']);
 
+# popups
+Route::get('get/popups', [AdController::class, 'getPopups']);
+
 /** APP GASTOS */
 # transactions
 Route::get('getTransactions', [GastosController::class, 'getTransactions']);

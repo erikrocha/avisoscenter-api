@@ -809,7 +809,7 @@ class AdController extends Controller
         return $model;
     }
 
-    public function getpopups()
+    public function getPopups()
     {
         $popups = Popup::select('*')
         ->where('status', '=', 1)
