@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AdController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ImageController;
-use App\Http\Controllers\API\GastosController;
+use App\Http\Controllers\API\ConfigController;
+//use App\Http\Controllers\API\GastosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,9 @@ Route::get('getImagesFromAd', [ImageController::class, 'getImagesFromAd']);
 
 # popups
 Route::get('get/popups', [AdController::class, 'getPopups']);
+
+# configs
+Route::get('get/version', [ConfigController::class, 'getVersion']);
 
 /** APP GASTOS */
 # transactions
