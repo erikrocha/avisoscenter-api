@@ -413,7 +413,10 @@ class AdController extends Controller
                     ];
                 })->toArray(),
                 'images' => $ad->images->map(function ($image) {
-                    return ['url' => $image->url];
+                    return [
+                        'id' => $image->id,
+                        'url' => $image->url
+                    ];
                 })->toArray(),
             ];
         });
