@@ -38,6 +38,7 @@ class Ad extends Modelo
         'silent',
         'cook',
         'status',
+        'notes',
         'currency',
         'year',
         'mileage',

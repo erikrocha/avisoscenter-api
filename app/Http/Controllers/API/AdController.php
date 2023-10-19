@@ -594,6 +594,7 @@ class AdController extends Controller
                 'laundry' => $request['laundry'],
                 'silent' => $request['silent'],
                 'status' => $request['status'],
+                'notes' => $request['notes'],
                 'created_at' => $request['datetime'],
                 'expired_at' => $request['expired_at'],
                 'currency' => $request['currency'],
