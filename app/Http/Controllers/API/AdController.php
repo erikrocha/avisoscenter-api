@@ -595,6 +595,7 @@ class AdController extends Controller
                 'silent' => $request['silent'],
                 'status' => $request['status'],
                 'created_at' => $request['datetime'],
+                'expired_at' => $request['expired_at'],
                 'currency' => $request['currency'],
                 'year' => $request['year'],
                 'mileage' => $request['mileage'],

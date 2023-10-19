@@ -46,7 +46,8 @@ class Ad extends Modelo
         'transmission',
         'color',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'expired_at'
     ];
 
     public function city()
