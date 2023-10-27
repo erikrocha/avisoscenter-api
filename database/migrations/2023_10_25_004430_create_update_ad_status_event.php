@@ -18,7 +18,9 @@ return new class extends Migration
             ON SCHEDULE EVERY 1 HOUR
             DO
               UPDATE ads
-              SET status = 0
+              SET 
+                status = 0,
+                notes = CONCAT(notes, ", inactive(event)")
               WHERE expired_at <= NOW();
         ');
     }
