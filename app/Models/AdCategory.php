@@ -13,4 +13,14 @@ class AdCategory extends Model
         'ad_id',
         'category_id'
     ];
+
+    public function phones()
+    {
+        return $this->belongsToMany(Phone::class, 'ad_phones', 'ad_id', 'phone_id');
+    }
+
+    public function ad()
+    {
+        return $this->belongsTo(Ad::class, 'id');
+    }
 }

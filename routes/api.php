@@ -33,6 +33,7 @@ Route::get('getAdFromIdV2', [AdController::class, 'getAdFromIdV2']);
 Route::get('getAdCategories', [AdController::class, 'getAdCategories']);
 Route::get('getPhonesFromId', [AdController::class, 'getPhonesFromId']);
 Route::get('getAdsFromCategory', [AdController::class, 'getAdsFromCategory']);
+Route::get('getAdsFromCategoryV2', [AdController::class, 'getAdsFromCategoryV2']);
 Route::get('getAdsFromPhone', [AdController::class, 'getAdsFromPhone']);
 Route::get('getRentsWithLocation', [AdController::class, 'getRentsWithLocation']);
 Route::get('getAdsFromVehicles', [AdController::class, 'getAdsFromVehicles']);

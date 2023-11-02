@@ -347,6 +347,50 @@ class AdController extends Controller
         ]);
     }
 
+    public function getAdsFromCategoryV2(Request $request)
+    {
+        $page = request()->input('page', 1);
+        $pageSize = request()->input('pageSize', 10);
+
+        $ads = AdCategory::with('phones', 'ad')
+            ->whereHas('ad', function($query){
+                $query->where('status', 1);
+            })
+            ->where('category_id', '=', $request->input('category_id'))
+            ->orderByDesc('created_at', 'desc')
+            ->paginate($pageSize, ['*'], 'page', $page);
+
+        $count = $ads->total();
+
+        $data = $ads->map(function($a){
+            return [
+                'id' => $a->ad->id,
+                'body' => $a->ad->body,
+                'create_at' => $a->ad->created_at,
+                'expired_at' => $a->ad->expired_at,
+                'phones' => $a->phones->map(function($p){
+                    return [
+                        'phone_id' => $p->id,
+                        'number' => $p->number
+                    ];
+                })->toArray()
+            ];
+        });
+
+        $paginationLinks = [
+            'first_page' => 1,
+            'last_page' => $ads->lastPage(),
+            'previous_page' => $ads->previousPageUrl(),
+            'next_page' => $ads->nextPageUrl(),
+        ];
+
+        return response()->json([
+            'count' => $count,
+            'items' => $data,
+            'pagination_links' => $paginationLinks
+        ]);
+    }
+
     public function getAdsFromVehiclesV2(Request $request)
     {
         $page = request()->input('page', 1);
