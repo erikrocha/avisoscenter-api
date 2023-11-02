@@ -353,10 +353,10 @@ class AdController extends Controller
         $pageSize = request()->input('pageSize', 10);
 
         $ads = AdCategory::with('phones', 'ad')
-            ->whereHas('ad', function($query){
-                $query->where('status', 1);
+            ->whereHas('ad', function($query) use ($request){
+                $query->where('status', 1)
+                    ->where('category_id', '=', $request->input('category_id'));
             })
-            ->where('category_id', '=', $request->input('category_id'))
             ->orderByDesc('created_at', 'desc')
             ->paginate($pageSize, ['*'], 'page', $page);
 
