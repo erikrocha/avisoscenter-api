@@ -38,6 +38,7 @@ Route::get('getAdsFromPhone', [AdController::class, 'getAdsFromPhone']);
 Route::get('getRentsWithLocation', [AdController::class, 'getRentsWithLocation']);
 Route::get('getAdsFromVehicles', [AdController::class, 'getAdsFromVehicles']);
 Route::get('getAdsFromVehiclesV2', [AdController::class, 'getAdsFromVehiclesV2']);
+Route::get('getLastIdAd', [AdController::class, 'getLastIdAd']);
 
 Route::post('postAd', [AdController::class, 'postAd']);
 Route::put('ads/{id}', [AdController::class, 'update']);
