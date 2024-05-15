@@ -6,6 +6,8 @@ use App\Http\Controllers\API\AdController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ImageController;
 use App\Http\Controllers\API\ConfigController;
+use App\Http\Controllers\API\BusinessController;
+
 //use App\Http\Controllers\API\GastosController;
 
 /*
@@ -74,6 +76,16 @@ Route::get('get/popups', [AdController::class, 'getPopups']);
 # configs
 Route::get('get/version', [ConfigController::class, 'getVersion']);
 
+# businesses
+Route::get('getAllBads', [BusinessController::class, 'getAllBads']);
+Route::get('getAllBcategories', [BusinessController::class, 'getAllBcategories']);
+Route::get('getAllBusiness', [BusinessController::class, 'getAllBusiness']);
+Route::get('getBusinessById/{id}', [BusinessController::class, 'getBusinessById']);
+
+
+
+
+
 /** APP GASTOS */
 # transactions
 Route::get('getTransactions', [GastosController::class, 'getTransactions']);
@@ -88,3 +100,5 @@ Route::get('balanceTransaction', [GastosController::class, 'balanceTransaction']
 Route::get('getTCategories', [GastosController::class, 'getTCategories']);
 Route::post('postTCategory', [GastosController::class, 'postTCategory']);
 Route::put('tcategories/{id}', [GastosController::class, 'putTCategory']);
+
+
