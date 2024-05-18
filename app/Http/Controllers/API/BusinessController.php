@@ -13,7 +13,18 @@ class BusinessController extends Controller
     {
       $bads = DB::table('bads')
         ->join('businesses', 'bads.business_id', '=', 'businesses.id')
-        ->select('bads.id as bad_id', 'businesses.id as business_id', 'bads.image', 'businesses.phone', 'businesses.whatsapp')
+        ->select(
+            'bads.id as bad_id', 
+            'businesses.id as business_id',
+            'businesses.name',
+            'businesses.description',
+            'businesses.image',
+            'bads.image', 
+            'businesses.phone', 
+            'businesses.whatsapp',
+            'bads.created_at',
+            'bads.expired_at',
+            )
         ->where('bads.status', '=', 1)
         ->orderByDesc('bads.created_at')
         ->get();
