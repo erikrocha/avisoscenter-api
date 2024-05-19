@@ -18,7 +18,7 @@ class BusinessController extends Controller
             'businesses.id as business_id',
             'businesses.name',
             'businesses.description',
-            'businesses.image',
+            'businesses.image as business_image',
             'bads.image', 
             'businesses.phone', 
             'businesses.whatsapp',
