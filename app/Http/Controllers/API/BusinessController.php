@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Business;
 use DB;
 
 class BusinessController extends Controller
@@ -53,20 +52,44 @@ class BusinessController extends Controller
 
     public function getAllBusinesses()
     {
-      $business = DB::table('businesses')
+      $businesses = DB::table('businesses')
         ->select('id as business_id', 'name', 'description', 'image')
         ->where('status', '=', 1)
         ->get();
 
       return response()->json([
-        'count' => $business->count(),
-        'items' => $business
+        'count' => $businesses->count(),
+        'items' => $businesses
       ]);
     }
 
     public function getBusinessById($businessId)
     {
-      $business = Business::findOrFail($businessId);
+      //$business = Business::findOrFail($businessId);
+      $business = DB::table('businesses')
+        ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
+        ->select(
+          'businesses.id',
+          'businesses.bcategory_id',
+          'businesses.name',
+          'businesses.description',
+          'businesses.description_long',
+          'businesses.address',
+          'businesses.image as business_image',
+          'promotions.image as promotion_image',
+          'businesses.web',
+          'businesses.email',
+          'businesses.phone',
+          'businesses.whatsapp',
+          'businesses.tiktok',
+          'businesses.status',
+          'businesses.created_at',
+          'businesses.updated_at',
+        )
+        ->where('businesses.status', '=', 1)
+        ->where('businesses.id', '=', $businessId)
+        ->first();
+
       return response()->json($business);
     }
 }
