@@ -79,7 +79,7 @@ Route::get('get/version', [ConfigController::class, 'getVersion']);
 # businesses
 Route::get('getAllBads', [BusinessController::class, 'getAllBads']);
 Route::get('getAllBcategories', [BusinessController::class, 'getAllBcategories']);
-Route::get('getAllBusiness', [BusinessController::class, 'getAllBusiness']);
+Route::get('getAllBusinesses', [BusinessController::class, 'getAllBusinesses']);
 Route::get('getBusinessById/{id}', [BusinessController::class, 'getBusinessById']);
 
 

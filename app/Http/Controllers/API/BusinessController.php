@@ -12,14 +12,17 @@ class BusinessController extends Controller
     public function getAllBads()
     {
       $bads = DB::table('bads')
-        ->join('businesses', 'bads.business_id', '=', 'businesses.id')
+        //->join('businesses', 'bads.business_id', '=', 'businesses.id')
+        ->join('businesses', 'businesses.id', '=', 'bads.business_id')
+        ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
         ->select(
             'bads.id as bad_id', 
             'businesses.id as business_id',
             'businesses.name',
             'businesses.description',
             'businesses.image as business_image',
-            'bads.image', 
+            'bads.image as bad_image',
+            'promotions.image as promotion_image',
             'businesses.phone', 
             'businesses.whatsapp',
             'bads.created_at',
@@ -48,7 +51,7 @@ class BusinessController extends Controller
       ]);
     }
 
-    public function getAllBusiness()
+    public function getAllBusinesses()
     {
       $business = DB::table('businesses')
         ->select('id as business_id', 'name', 'description', 'image')
