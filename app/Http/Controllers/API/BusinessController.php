@@ -88,6 +88,7 @@ class BusinessController extends Controller
           'businesses.email',
           'businesses.phone',
           'businesses.whatsapp',
+          'businesses.facebook',
           'businesses.tiktok',
           'businesses.status',
           'businesses.created_at',
