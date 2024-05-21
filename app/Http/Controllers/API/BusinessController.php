@@ -53,8 +53,15 @@ class BusinessController extends Controller
     public function getAllBusinesses()
     {
       $businesses = DB::table('businesses')
-        ->select('id as business_id', 'name', 'description', 'image')
-        ->where('status', '=', 1)
+        ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
+        ->select(
+          'businesses.id as business_id', 
+          'businesses.name', 
+          'businesses.description', 
+          'businesses.image as business_image',
+          'promotions.status as hasPromotion',
+          )
+        ->where('businesses.status', '=', 1)
         ->get();
 
       return response()->json([
