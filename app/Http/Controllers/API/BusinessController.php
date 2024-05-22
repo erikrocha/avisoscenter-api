@@ -50,23 +50,47 @@ class BusinessController extends Controller
       ]);
     }
 
-    public function getAllBusinesses()
+    public function getAllBusinesses(Request $request)
     {
+      $page = $request->input('page', 1);
+      $pageSize = request()->input('pageSize', 10);
+
       $businesses = DB::table('businesses')
-        ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
         ->select(
           'businesses.id as business_id', 
           'businesses.name', 
           'businesses.description', 
           'businesses.image as business_image',
           'promotions.status as hasPromotion',
+          'businesses.paid as hasPaid',
           )
+        ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
         ->where('businesses.status', '=', 1)
-        ->get();
+        ->orderByDesc('businesses.paid')
+        ->orderByDesc('businesses.created_at');
+
+      $count = $businesses->count();
+
+      $b = $businesses->skip(($page - 1) * $pageSize)
+      ->take($pageSize)
+      ->get();
+
+      $lastPage = ceil($count / $pageSize); // Calcular el número de la última página
+
+      $previousPage = $page > 1 ? $page - 1 : null; // Calcular la página anterior
+      $nextPage = $page < $lastPage ? $page + 1 : null; // Calcular la página siguiente
+
+      $paginationLinks = [
+          'first_page' => 1,
+          'last_page' => $lastPage,
+          'previous_page' => $previousPage,
+          'next_page' => $nextPage,
+      ];
 
       return response()->json([
-        'count' => $businesses->count(),
-        'items' => $businesses
+          'count' => $count,
+          'items' => $b->toArray(),
+          'pagination_links' => $paginationLinks
       ]);
     }
 
@@ -99,5 +123,54 @@ class BusinessController extends Controller
         ->first();
 
       return response()->json($business);
+    }
+
+    public function getBusinessesByBcategory(Request $request)
+    {
+      $page = $request->input('page', 1);
+      $pageSize = request()->input('pageSize', 10);
+
+      $businesses = DB::table('businesses')
+        ->select(
+          'businesses.id as business_id',
+          'bcategories.id as bcategory_id',
+          'bcategories.name as bcategory_name',
+          'businesses.name',
+          'businesses.description',
+          'businesses.image as business_image',
+          'promotions.status as hasPromotion',
+          'businesses.paid as hasPaid',
+        )
+        ->leftJoin('bcategories', 'bcategories.id', '=', 'businesses.bcategory_id')
+        ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
+        ->where('businesses.status', '=', 1)
+        ->where('bcategory_id', '=', $request->input('category_id'))
+        ->orderByDesc('businesses.paid')
+        ->orderByDesc('businesses.created_at');
+        //->get();
+
+      $count = $businesses->count();
+
+      $b = $businesses->skip(($page - 1) * $pageSize)
+      ->take($pageSize)
+      ->get();
+
+      $lastPage = ceil($count / $pageSize); // Calcular el número de la última página
+
+      $previousPage = $page > 1 ? $page - 1 : null; // Calcular la página anterior
+      $nextPage = $page < $lastPage ? $page + 1 : null; // Calcular la página siguiente
+
+      $paginationLinks = [
+          'first_page' => 1,
+          'last_page' => $lastPage,
+          'previous_page' => $previousPage,
+          'next_page' => $nextPage,
+      ];
+
+      return response()->json([
+          'count' => $count,
+          'items' => $b->toArray(),
+          'pagination_links' => $paginationLinks
+      ]);
     }
 }

@@ -81,10 +81,7 @@ Route::get('getAllBads', [BusinessController::class, 'getAllBads']);
 Route::get('getAllBcategories', [BusinessController::class, 'getAllBcategories']);
 Route::get('getAllBusinesses', [BusinessController::class, 'getAllBusinesses']);
 Route::get('getBusinessById/{id}', [BusinessController::class, 'getBusinessById']);
-
-
-
-
+Route::get('getBusinessesByBcategory', [BusinessController::class, 'getBusinessesByBcategory']);
 
 /** APP GASTOS */
 # transactions
