@@ -40,8 +40,9 @@ class BusinessController extends Controller
     public function getAllBCategories()
     {
       $bcategories = DB::table('bcategories')
-        ->select('id as bcategory_id', 'name')
+        ->select('id as bcategory_id', 'name', 'order')
         ->where('status', '=', 1)
+        ->orderBy('order')
         ->get();
 
       return response()->json([
