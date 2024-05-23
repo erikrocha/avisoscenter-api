@@ -106,6 +106,8 @@ class BusinessController extends Controller
           'businesses.description',
           'businesses.description_long',
           'businesses.address',
+          'businesses.latitude',
+          'businesses.longitude',
           'businesses.image as business_image',
           'promotions.image as promotion_image',
           'businesses.web',
