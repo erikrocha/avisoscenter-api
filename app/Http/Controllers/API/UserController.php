@@ -36,4 +36,22 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function register(Request $request)
+    {
+      $data = $request->validate([
+              'name' => 'required|max:128',
+              'email'=> 'required|email|unique:users',
+              'password' => 'required|confirmed',
+              'status' => 'required'
+      ]);
+
+      $user = User::create($data);
+      $token = $user->createToken($request->name);
+
+      return [
+              'user' => $user,
+              'token'=> $token->plainTextToken
+      ];
+    }
 }
