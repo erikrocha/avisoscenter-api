@@ -58,13 +58,16 @@ class BusinessController extends Controller
 
       $businesses = DB::table('businesses')
         ->select(
-          'businesses.id as business_id', 
+          'businesses.id as business_id',
+          'bcategories.id as bcategory_id',
+          'bcategories.name as bcategory_name', 
           'businesses.name', 
           'businesses.description', 
           'businesses.image as business_image',
           'promotions.status as hasPromotion',
           'businesses.paid as hasPaid',
           )
+        ->leftJoin('bcategories', 'bcategories.id', '=', 'businesses.bcategory_id')
         ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
         ->where('businesses.status', '=', 1)
         ->orderByDesc('businesses.paid')
