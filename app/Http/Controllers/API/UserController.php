@@ -45,7 +45,9 @@ class UserController extends Controller
               'password' => 'required|confirmed',
               'status' => 'required'
       ]);
-
+      // Encriptar la contraseña
+      $data['password'] = bcrypt($data['password']);
+      
       $user = User::create($data);
       $token = $user->createToken($request->name);
 
