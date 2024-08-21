@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         DB::unprepared('
-            CREATE EVENT UpdateAdStatus
+            CREATE EVENT IF NOT EXISTS UpdateAdStatus
             ON SCHEDULE EVERY 1 HOUR
             DO
               UPDATE ads
