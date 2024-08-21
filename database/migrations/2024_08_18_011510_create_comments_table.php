@@ -31,8 +31,8 @@ return new class extends Migration
             'ad_id' => 1,
             'business_id' => null,
             'comment' => 'comment ad 1',
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-08-21 17:08',
+            'updated_at' => '2024-08-21 17:08'
         ]);
 
         DB::table('comments')->insert([
@@ -40,8 +40,8 @@ return new class extends Migration
             'ad_id' => null,
             'business_id' => 1,
             'comment' => 'comment business 1',
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-08-21 17:09',
+            'updated_at' => '2024-08-21 17:09'
         ]);
         
     }

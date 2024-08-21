@@ -29,7 +29,7 @@ class AdController extends Controller
         ->count();
 
         $ads = AdCategory::select(
-            'ads.id',
+            'ads.id as ad_id',
             'ads.body',
             'ads.address',
             'ads.price',
@@ -364,7 +364,7 @@ class AdController extends Controller
         ->count();
 
         $needs = AdCategory::select(
-            'ads.id',
+            'ads.id as ad_id',
             'ads.body',
             'ads.address',
             'ads.price',
