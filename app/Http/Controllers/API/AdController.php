@@ -22,20 +22,62 @@ class AdController extends Controller
     public function getAllAds(Request $request)
     {
         $page = $request->input('page', 1);
-        $pageSize = $request->input('pageSize', 2);
+        $pageSize = $request->input('pageSize', 10);
 
-        $ads = AdCategory::select('*', 
-                'categories.name as category_name', 
-                'types.name as type_name', 
-                'ads.created_at as date',
-                'ads.status as ad_status'
-            )
-            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
-            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            ->leftJoin('types', 'ads.type_id', '=', 'types.id')
-            ->where('ads.status', '=', 1)
-            ->orderByDesc('ads.condition')
-            ->orderByDesc('ads.created_at');
+        $totalAdsCount = AdCategory::join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+        ->where('ads.status', '=', 1)
+        ->count();
+
+        $ads = AdCategory::select(
+            'ads.id',
+            'ads.body',
+            'ads.address',
+            'ads.price',
+            'ads.latitude',
+            'ads.longitude',
+            'ads.condition',
+            'ads.type_id',
+            'ads.isIA',
+            'ads.bath',
+            'ads.pets',
+            'ads.wifi',
+            'ads.cable',
+            'ads.parking_moto',
+            'ads.parking_car',
+            'ads.thermal',
+            'ads.laundry',
+            'ads.silent',
+            'ads.cook',
+            'ads.status',
+            'ads.notes',
+            'ads.created_at',
+            'ads.updated_at',
+            'ads.expired_at',
+            'ads.currency',
+            'ads.year',
+            'ads.mileage',
+            'ads.engine',
+            'ads.fuel',
+            'ads.transmission',
+            'ads.color',
+            'categories.name as category_name',
+            'types.name as type_name',
+            DB::raw('COUNT(comments.id) as comment_count')
+        )
+        ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+        ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+        ->leftJoin('types', 'ads.type_id', '=', 'types.id')
+        ->leftJoin('comments', 'comments.ad_id', '=', 'ads.id')
+        ->where('ads.status', '=', 1)
+        ->groupBy(
+            'ads.id', 
+            'categories.name', 
+            'types.name', 
+            'ads.created_at', 
+            'ads.status'
+        )
+        ->orderByDesc('ads.condition')
+        ->orderByDesc('ads.created_at');
             
         $count = $ads->count();
 
@@ -43,7 +85,7 @@ class AdController extends Controller
                         ->take($pageSize)
                         ->get();
 
-            $lastPage = ceil($count / $pageSize);
+        $lastPage = ceil($totalAdsCount / $pageSize);
 
         $previousPage = $page > 1 ? $page - 1 : null;
         $nextPage = $page < $lastPage ? $page + 1 : null;
@@ -56,7 +98,7 @@ class AdController extends Controller
         ];
         
         return response()->json([
-            'count' => $count,
+            'count' => $totalAdsCount,
             'items' => $data->toArray(),
             'pagination_links' => $paginationLinks
         ]);
@@ -316,27 +358,60 @@ class AdController extends Controller
         $page = $request->input('page', 1); // Obtener el número de página del request, por defecto es 1
         $pageSize = $request->input('pageSize', 10); // Obtener el tamaño de página del request, por defecto es 10
 
-        $needs = AdCategory::select(
-                '*', 
-                'categories.name as category_name',
-                'types.name as type_name',
-                'ads.created_at as date'
-            )
-            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
-            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            ->leftJoin('types', 'types.id', '=', 'ads.type_id')
-            ->where('category_id', '=', $request->input('category_id'))
-            ->where('ads.status', '=', 1)
-            ->orderByDesc('ads.condition')
-            ->orderByDesc('ads.created_at');
+        $totalAdsCount = AdCategory::join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+        ->where('ad_categories.category_id', '=', $request->input('category_id'))
+        ->where('ads.status', '=', 1)
+        ->count();
 
-            $count = $needs->count(); // Obtener el número total de registros sin paginación
+        $needs = AdCategory::select(
+            'ads.id',
+            'ads.body',
+            'ads.address',
+            'ads.price',
+            'ads.latitude',
+            'ads.longitude',
+            'ads.condition',
+            'ads.type_id',
+            'ads.isIA',
+            'ads.bath',
+            'ads.pets',
+            'ads.wifi',
+            'ads.cable',
+            'ads.parking_moto',
+            'ads.parking_car',
+            'ads.thermal',
+            'ads.laundry',
+            'ads.silent',
+            'ads.cook',
+            'ads.currency',
+            'ads.year',
+            'ads.mileage',
+            'ads.engine',
+            'ads.fuel',
+            'ads.transmission',
+            'ads.color',
+            'ads.created_at as date',
+            'categories.name as category_name',
+            'types.name as type_name',
+            DB::raw('COUNT(comments.id) as comment_count') // Se añade el conteo de comentarios
+        )
+        ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+        ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+        ->leftJoin('types', 'types.id', '=', 'ads.type_id')
+        ->leftJoin('comments', 'comments.ad_id', '=', 'ads.id') // Se añade la unión con la tabla de comentarios
+        ->where('ad_categories.category_id', '=', $request->input('category_id'))
+        ->where('ads.status', '=', 1)
+        ->groupBy('ads.id', 'categories.name', 'types.name', 'ads.created_at') // Se agrupa por ads.id para evitar duplicados
+        ->orderByDesc('ads.condition')
+        ->orderByDesc('ads.created_at');
+
+            //$count = $needs->count(); // Obtener el número total de registros sin paginación
 
             $ads = $needs->skip(($page - 1) * $pageSize)
                           ->take($pageSize)
                           ->get(); // Obtener los registros de la página actual
 
-        $lastPage = ceil($count / $pageSize); // Calcular el número de la última página
+                          $lastPage = ceil($totalAdsCount / $pageSize);
 
         $previousPage = $page > 1 ? $page - 1 : null; // Calcular la página anterior
         $nextPage = $page < $lastPage ? $page + 1 : null; // Calcular la página siguiente
@@ -349,7 +424,7 @@ class AdController extends Controller
         ];
 
         return response()->json([
-            'count' => $count,
+            'count' => $totalAdsCount,
             'items' => $ads->toArray(),
             'pagination_links' => $paginationLinks
         ]);
