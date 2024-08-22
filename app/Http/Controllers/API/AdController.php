@@ -173,7 +173,7 @@ class AdController extends Controller
 
     public function getAdFromIdV2(Request $request)
     {
-        $ad = Ad::with('categories', 'images', 'phones', 'city', 'type', 'brand', 'model')
+        $ad = Ad::with('categories', 'images', 'phones', 'city', 'type', 'brand', 'model', 'comments.user')
                 ->where('id', '=', $request->input('ad_id'))
                 ->first();
         
@@ -241,7 +241,19 @@ class AdController extends Controller
                         'phone_id' => $phone->id,
                         'number' => $phone->number
                     ];
-                })->toArray(), 
+                })->toArray(),
+                'comments' => $ad->comments->filter(function ($comment) {
+                    return $comment->user->status == 1; // Solo comentarios de usuarios activos
+                })->map(function ($comment) {
+                    return [
+                        'comment_id' => $comment->id,
+                        'comment'    => $comment->comment,
+                        'user_id'    => $comment->user_id,
+                        'user_name'  => $comment->user->name,
+                        'status'     => $comment->status,
+                        'created_at' => $comment->created_at,
+                    ];
+                })->toArray(),
             ];
         } else {
             $data = [];

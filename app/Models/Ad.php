@@ -85,4 +85,10 @@ class Ad extends Modelo
     {
         return $this->belongsToMany(Phone::class, 'ad_phones', 'ad_id', 'phone_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'ad_id');
+    }
+
 }
