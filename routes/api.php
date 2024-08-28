@@ -6,7 +6,8 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ImageController;
 use App\Http\Controllers\API\ConfigController;
 use App\Http\Controllers\API\BusinessController;
-//use App\Http\Controllers\API\GastosController;
+use App\Http\Controllers\API\GastosController;
+use App\Http\Controllers\API\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +64,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
   // Route::get('adPhones', [AdController::class, 'adPhones']);
 
   # users
-  //Route::get('users', [UserController::class, 'index']);
+  Route::get('users', [UserController::class, 'index']);
+  Route::post('checkEmailExists', [UserController::class, 'checkEmailExists']);
   //Route::post('users', [UserController::class, 'store']);
 
   # images
@@ -81,6 +83,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('getAllBusinesses', [BusinessController::class, 'getAllBusinesses']);
   Route::get('getBusinessById/{id}', [BusinessController::class, 'getBusinessById']);
   Route::get('getBusinessesByBcategory', [BusinessController::class, 'getBusinessesByBcategory']);
+
+  # comments
+  Route::resource('comments', CommentController::class);
 
   /** APP GASTOS */
   # transactions
