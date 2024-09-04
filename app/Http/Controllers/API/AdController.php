@@ -62,6 +62,7 @@ class AdController extends Controller
             'ads.color',
             'categories.name as category_name',
             'types.name as type_name',
+            'ads.created_at as date',
             DB::raw('COUNT(comments.id) as comment_count')
         )
         ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
@@ -125,7 +126,8 @@ class AdController extends Controller
             ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
             ->leftJoin('types', 'ads.type_id', '=', 'types.id')
             ->orderByDesc('ads.created_at')
-            ->get();
+            ->paginate(50);
+            //->get();
         
         return response()->json([
             'count' => count($ads),
