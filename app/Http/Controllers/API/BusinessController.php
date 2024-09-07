@@ -102,10 +102,12 @@ class BusinessController extends Controller
     {
       //$business = Business::findOrFail($businessId);
       $business = DB::table('businesses')
+        ->join ('bcategories', 'bcategories.id', '=', 'businesses.bcategory_id')
         ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
         ->select(
           'businesses.id',
           'businesses.bcategory_id',
+          'bcategories.name as bcategory_name',
           'businesses.name',
           'businesses.description',
           'businesses.description_long',
@@ -120,6 +122,7 @@ class BusinessController extends Controller
           'businesses.whatsapp',
           'businesses.facebook',
           'businesses.tiktok',
+          'businesses.paid as hasPaid',
           'businesses.status',
           'businesses.created_at',
           'businesses.updated_at',
