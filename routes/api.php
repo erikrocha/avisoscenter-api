@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ConfigController;
 use App\Http\Controllers\API\BusinessController;
 use App\Http\Controllers\API\GastosController;
 use App\Http\Controllers\API\CommentController;
+use App\Http\Controllers\API\BventaGasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('getTCategories', [GastosController::class, 'getTCategories']);
   Route::post('postTCategory', [GastosController::class, 'postTCategory']);
   Route::put('tcategories/{id}', [GastosController::class, 'putTCategory']);
+
+  /** BVENTA GAS */
+  # licenses
+  Route::post('/activate', [BventaGasController::class, 'activate']);
 });
 
 Route::post('register', [UserController::class, 'register']); 
