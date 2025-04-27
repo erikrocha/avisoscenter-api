@@ -106,6 +106,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   /** BVENTA GAS */
   # licenses
   Route::post('/activate', [BventaGasController::class, 'activate']);
+  Route::post('/is_used', [BventaGasController::class, 'is_used']);
 });
 
 Route::post('register', [UserController::class, 'register']); 
