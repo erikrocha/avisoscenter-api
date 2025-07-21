@@ -82,6 +82,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('getAllBads', [BusinessController::class, 'getAllBads']);
   Route::get('getAllBcategories', [BusinessController::class, 'getAllBcategories']);
   Route::get('getAllBusinesses', [BusinessController::class, 'getAllBusinesses']);
+  Route::get('getAllPromotions', [BusinessController::class, 'getAllPromotions']);
   Route::get('getBusinessById/{id}', [BusinessController::class, 'getBusinessById']);
   Route::get('getBusinessesByBcategory', [BusinessController::class, 'getBusinessesByBcategory']);
 

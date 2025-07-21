@@ -51,6 +51,19 @@ class BusinessController extends Controller
       ]);
     }
 
+    public function getAllPromotions()
+    {
+      $promotions = DB::table('promotions')
+        ->select('*')
+        ->where('status', '=', 1)
+        ->get();
+
+      return response()->json([
+        'count' => $promotions->count(),
+        'items' => $promotions
+      ]);
+    }
+
     public function getAllBusinesses(Request $request)
     {
       $page = $request->input('page', 1);
