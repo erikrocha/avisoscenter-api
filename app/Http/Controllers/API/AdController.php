@@ -288,27 +288,30 @@ class AdController extends Controller
     }
     
     /* frm_rents : show in mav_map*/
-    public function getRentsWithLocation()
+    public function getRentsWithLocation(Request $request)
     {
-        $rentsWithLocation = AdCategory::select(
-                '*', 
-                'categories.name as category_name',
-                'types.name as type_name',
-                'ads.created_at as date',
-                'ads.status as ad_status'
-            )
-            ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
-            ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
-            ->leftJoin('types', 'types.id', '=', 'ads.type_id')
-            ->whereNotNull('latitude')
-            ->where('ads.status', '=', 1)
-            ->where('categories.name', '=', 'ALQUILO')
-            ->get();
-        
-        return response()->json([
-            'count' => count($rentsWithLocation),
-            'items' => $rentsWithLocation
-        ]);
+      $city_id = $request->input('city_id');
+
+      $rentsWithLocation = AdCategory::select(
+            '*', 
+            'categories.name as category_name',
+            'types.name as type_name',
+            'ads.created_at as date',
+            'ads.status as ad_status'
+        )
+        ->join('ads', 'ads.id', '=', 'ad_categories.ad_id')
+        ->join('categories', 'categories.id', '=', 'ad_categories.category_id')
+        ->leftJoin('types', 'types.id', '=', 'ads.type_id')
+        ->whereNotNull('latitude')
+        ->where('ads.status', '=', 1)
+        ->where('categories.name', '=', 'ALQUILO')
+        ->where('city_id', '=', $city_id)
+        ->get();
+      
+      return response()->json([
+          'count' => count($rentsWithLocation),
+          'items' => $rentsWithLocation
+      ]);
     }
 
     public function getLandsWithLocation(Request $request)
