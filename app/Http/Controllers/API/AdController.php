@@ -501,12 +501,15 @@ class AdController extends Controller
     {
         $page = request()->input('page', 1);
         $pageSize = request()->input('pageSize', 10);
+        $city_id = $request->input('city_id');
 
         // count
         $count = Ad::has('categories')->whereHas('categories', function($query){
             $query->where('type_id', 8);
         })
         ->where('status', 1)
+        ->whereNotNull('city_id')
+        ->where('city_id', '=', $city_id)
         ->count();
 
         // Obtiene los anuncios con sus categorías e imágenes paginados de acuerdo a los parámetros recibidos.
@@ -518,6 +521,8 @@ class AdController extends Controller
                 $query->where('type_id', 8);
             })
             ->where('status', '=', 1)
+            ->where('city_id', '=', $city_id)
+            ->orderByDesc('condition')
             ->orderByDesc('condition')
             ->orderByDesc('created_at')
             ->paginate($pageSize, ['*'], 'page', $page);
