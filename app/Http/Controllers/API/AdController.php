@@ -316,9 +316,13 @@ class AdController extends Controller
 
     public function getLandsWithLocation(Request $request)
     {
+        $city_id = $request->input('city_id');
+
         $count = Ad::has('categories')
             ->where('status', '=', 1)
             ->where('latitude', '<>', '')
+            ->whereNotNull('city_id')
+            ->where('city_id', '=', $city_id)
             ->whereHas('categories', function($query){
                 $query->where('type_id', 9);
             })
@@ -327,6 +331,8 @@ class AdController extends Controller
         $ads = Ad::with('categories', 'city', 'type')
             ->where('status', '=', 1)
             ->where('latitude', '<>', '')
+            ->whereNotNull('city_id')
+            ->where('city_id', '=', $city_id)
             ->whereHas('categories', function($query){
                 $query->where('type_id', 9);
             })
