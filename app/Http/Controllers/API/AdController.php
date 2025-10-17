@@ -23,9 +23,12 @@ class AdController extends Controller
     {
         $page = $request->input('page', 1);
         $pageSize = $request->input('pageSize', 10);
+        $city_id = $request->input('city_id');
 
         $totalAdsCount = AdCategory::join('ads', 'ads.id', '=', 'ad_categories.ad_id')
         ->where('ads.status', '=', 1)
+        ->whereNotNull('ads.city_id')
+        ->where('ads.city_id', '=', $city_id)
         ->count();
 
         $ads = AdCategory::select(
@@ -70,6 +73,8 @@ class AdController extends Controller
         ->leftJoin('types', 'ads.type_id', '=', 'types.id')
         ->leftJoin('comments', 'comments.ad_id', '=', 'ads.id')
         ->where('ads.status', '=', 1)
+        ->whereNotNull('ads.city_id')
+        ->where('ads.city_id', '=', $city_id)
         ->groupBy(
             'ads.id', 
             'categories.name', 
@@ -380,10 +385,13 @@ class AdController extends Controller
     {
         $page = $request->input('page', 1); // Obtener el número de página del request, por defecto es 1
         $pageSize = $request->input('pageSize', 10); // Obtener el tamaño de página del request, por defecto es 10
+        $city_id = $request->input('city_id');
 
         $totalAdsCount = AdCategory::join('ads', 'ads.id', '=', 'ad_categories.ad_id')
         ->where('ad_categories.category_id', '=', $request->input('category_id'))
         ->where('ads.status', '=', 1)
+        ->whereNotNull('ads.city_id')
+        ->where('ads.city_id', '=', $city_id)
         ->count();
 
         $needs = AdCategory::select(
@@ -424,6 +432,8 @@ class AdController extends Controller
         ->leftJoin('comments', 'comments.ad_id', '=', 'ads.id') // Se añade la unión con la tabla de comentarios
         ->where('ad_categories.category_id', '=', $request->input('category_id'))
         ->where('ads.status', '=', 1)
+        ->whereNotNull('ads.city_id')
+        ->where('ads.city_id', '=', $city_id)
         ->groupBy('ads.id', 'categories.name', 'types.name', 'ads.created_at') // Se agrupa por ads.id para evitar duplicados
         ->orderByDesc('ads.condition')
         ->orderByDesc('ads.created_at');
