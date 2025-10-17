@@ -68,6 +68,7 @@ class BusinessController extends Controller
     {
       $page = $request->input('page', 1);
       $pageSize = request()->input('pageSize', 10);
+      $city_id = $request->input('city_id');
 
       $businesses = DB::table('businesses')
         ->select(
@@ -83,6 +84,8 @@ class BusinessController extends Controller
         ->leftJoin('bcategories', 'bcategories.id', '=', 'businesses.bcategory_id')
         ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
         ->where('businesses.status', '=', 1)
+        ->whereNotNull('businesses.city_id')
+        ->where('businesses.city_id', '=', $city_id)
         ->orderByDesc('businesses.paid')
         ->orderByDesc('businesses.created_at');
 
