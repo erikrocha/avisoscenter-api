@@ -56,11 +56,15 @@ class BusinessController extends Controller
       ]);
     }
 
-    public function getAllPromotions()
+    public function getAllPromotions(Request $request)
     {
+      $city_id = $request->input('city_id');
+
       $promotions = DB::table('promotions')
         ->select('*')
         ->where('status', '=', 1)
+        ->whereNotNull('city_id')
+        ->where('city_id', '=', $city_id)
         ->get();
 
       return response()->json([
