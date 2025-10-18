@@ -8,14 +8,17 @@ use DB;
 
 class BusinessController extends Controller
 {
-    public function getAllBads()
+    public function getAllBads(Request $request)
     {
+      $city_id = $request->input('city_id');
+
       $bads = DB::table('bads')
         //->join('businesses', 'bads.business_id', '=', 'businesses.id')
         ->join('businesses', 'businesses.id', '=', 'bads.business_id')
         ->leftJoin('promotions', 'promotions.business_id', '=', 'businesses.id')
         ->select(
-            'bads.id as bad_id', 
+            'bads.id as bad_id',
+            'bads.city_id',
             'businesses.id as business_id',
             'businesses.name',
             'businesses.description',
@@ -28,6 +31,8 @@ class BusinessController extends Controller
             'bads.expired_at',
             )
         ->where('bads.status', '=', 1)
+        ->whereNotNull('bads.city_id')
+        ->where('bads.city_id', '=', $city_id)
         ->orderByDesc('bads.created_at')
         ->get();
 
