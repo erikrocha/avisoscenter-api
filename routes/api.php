@@ -9,6 +9,7 @@ use App\Http\Controllers\API\BusinessController;
 use App\Http\Controllers\API\GastosController;
 use App\Http\Controllers\API\CommentController;
 use App\Http\Controllers\API\BventaGasController;
+use App\Http\Controllers\API\SupplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +68,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   # users
   Route::get('users', [UserController::class, 'index']);
   Route::post('checkEmailExists', [UserController::class, 'checkEmailExists']);
-  //Route::post('users', [UserController::class, 'store']);
+  Route::post('users', [UserController::class, 'store']);
 
   # images
   Route::get('getImagesFromAd', [ImageController::class, 'getImagesFromAd']);
@@ -89,6 +90,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
   # comments
   Route::resource('comments', CommentController::class);
 
+  # supplies
+  Route::resource('supplies', SupplyController::class);
+
   /** APP GASTOS */
   # transactions
   Route::get('getTransactions', [GastosController::class, 'getTransactions']);
@@ -108,6 +112,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   # licenses
   Route::post('/activate', [BventaGasController::class, 'activate']);
   Route::post('/is_used', [BventaGasController::class, 'is_used']);
+  
 });
 
 Route::post('register', [UserController::class, 'register']); 

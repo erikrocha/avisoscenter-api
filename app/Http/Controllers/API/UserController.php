@@ -44,15 +44,19 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $token_receive = $request['token_device'];
+        $deviceId = $request->input('deviceId');
+        $deviceType = $request->input('deviceType');
+        $deviceToken = $request->input('deviceToken');
 
         $tokenExist = User::select('*')
-            ->where('users.token_device', '=', $request->input('token_device'))
+            ->where('users.deviceToken', '=', $deviceToken)
             ->get();
         
         if (count($tokenExist) == 0) {
             return User::create([
-                'token_device' => $request['token_device'],
+                'deviceId' => $deviceId,
+                'deviceType' => $deviceType,
+                'deviceToken' => $deviceToken,
                 'status' => 1
             ]);
         } else {

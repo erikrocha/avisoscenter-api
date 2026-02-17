@@ -23,6 +23,9 @@ class User extends Authenticatable
         'password',
         'token_device',
         'status',
+        'deviceId',
+        'deviceType',
+        'deviceToken',
     ];
 
     /**
