@@ -48,11 +48,9 @@ class UserController extends Controller
         $deviceType = $request->input('deviceType');
         $deviceToken = $request->input('deviceToken');
 
-        $tokenExist = User::select('*')
-            ->where('users.deviceToken', '=', $deviceToken)
-            ->get();
+        $user = User::where('deviceToken', $deviceToken)->first();
         
-        if (count($tokenExist) == 0) {
+        if (!$user) {
             return User::create([
                 'deviceId' => $deviceId,
                 'deviceType' => $deviceType,
@@ -61,7 +59,8 @@ class UserController extends Controller
             ]);
         } else {
             return response()->json([
-                'msg' => 'Este dispositivo ya ha sido registrado'
+                'msg' => 'Este dispositivo ya ha sido registrado',
+                'id' => $user->id 
             ]);
         }
     }
